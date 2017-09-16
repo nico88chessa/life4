@@ -1,6 +1,7 @@
 #include "LaserDutyProfile.hpp"
 
-LaserDutyProfile::LaserDutyProfile() : LaserDutyProfile(0, 100, 1) { }
+LaserDutyProfile::LaserDutyProfile()
+    : LaserDutyProfile(defaultPower, defaultDuty, defaultMinTimeOn) { }
 
 LaserDutyProfile::LaserDutyProfile(quint32 _power, quint32 _duty, float _pulseWidth, float _minTimeOn)
     : LaserBaseProfile(_power, _minTimeOn, 0), duty(_duty) {

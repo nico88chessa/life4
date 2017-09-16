@@ -1,6 +1,7 @@
 #include "LaserBaseProfile.hpp"
 
-LaserBaseProfile::LaserBaseProfile() : LaserBaseProfile(0, 0, 0) { }
+LaserBaseProfile::LaserBaseProfile()
+    : LaserBaseProfile(defaultPower, defaultMinTimeOn, defaultMaxTimeOn) { }
 
 LaserBaseProfile::LaserBaseProfile(quint32 _power, float _minTimeOn, float _maxTimeOn)
     : power(_power), minTimeOn(_minTimeOn), maxTimeOn(_maxTimeOn) {

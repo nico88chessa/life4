@@ -7,6 +7,11 @@
 #include <LaserPulsedProfile.hpp>
 #include <utility>
 
+static constexpr char defaultName[] = "Empty";
+static constexpr quint32 defaultBeams = 1;
+static constexpr float defaultYResolution = 1000;
+static constexpr quint32 defaultShotsPerPixel = 1;
+
 template <class L>
 class Profile {
 public:
@@ -22,21 +27,31 @@ private:
     type laserConfiguration;
 
 public:
-    Profile(type&& _laserConfiguration) : laserConfiguration(std::forward<type>(_laserConfiguration)) {
-        qDebug() << "enso";
-    }/*, Profile("", 1, 1, 1) {
-//        static_assert(isLaserBaseProfile<L>::value ||
-//                      isLaserDutyProfile<L>::value ||
-//                      isLaserPulsedProfile<L>::value, "template L argument isn't a LaserType");
 
-    }*/
+    Profile()
+        :Profile(defaultName, defaultBeams, defaultYResolution, defaultShotsPerPixel) { }
 
+    Profile(const type& _laserConfiguration)
+        : Profile ("Empty", 1, 1, 1) { }
+
+    Profile(const QString& _name, quint32 _beams, float _yResolution, quint32 _shotsPerPixel, const type& _laserConfiguration)
+        : name(_name), beams(_beams), yResolution(_yResolution), shotsPerPixel(_shotsPerPixel), laserConfiguration(_laserConfiguration) {
+
+        static_assert(isLaserBaseProfile<L>::value, "template type L isn't a Laser Base profile");
+        qDebug() << "Profile Constructor 2";
+    }
+
+    template <typename... Types>
     Profile(const QString& _name,
             quint32 _beams,
             float _yResolution,
-            quint32 _shotsPerPixel)/*,
-            type&& _laserConfiguration)*/
-        : name(_name), beams(_beams), yResolution(_yResolution), shotsPerPixel(_shotsPerPixel) { } //, laserConfiguration(std::move(_laserConfiguration)) { }
+            quint32 _shotsPerPixel,
+            Types... args)
+        : name(_name), beams(_beams), yResolution(_yResolution), shotsPerPixel(_shotsPerPixel), laserConfiguration(args...) {
+
+        static_assert(isLaserBaseProfile<L>::value, "template type L isn't a Laser Base profile");
+        qDebug() << "Profile Constructor 2";
+    }
 
     quint32 getShotsPerPixel() const {
         return shotsPerPixel;
@@ -71,16 +86,22 @@ public:
     }
 
     float getPixelTime() const {
-//        static_assert(isLaserBaseProfile<L>::value ||
-//                      isLaserDutyProfile<L>::value ||
-//                      isLaserPulsedProfile<L>::value, "template L argument isn't a LaserType");
+        static_assert(isLaserBaseProfile<type>::value, "template type L isn't a Laser Base profile");
+        return static_cast<const LaserBaseProfile&>(laserConfiguration).getMaxTimeOn() * this->shotsPerPixel;
+    }
 
-//        auto laser = (LaserBaseProfile) laserConfiguration;
+    const type& getLaserConfiguration() const {
+        return laserConfiguration;
+    }
 
-        return static_cast<LaserBaseProfile>(laserConfiguration).getMaxTimeOn();
+    void setLaserConfiguration(const type &value) {
+        laserConfiguration = value;
     }
 
 };
 
-#endif // PROFILE_HPP
+using ProfileBase = Profile<LaserBaseProfile>;
+using ProfileDuty = Profile<LaserDutyProfile>;
+using ProfilePulsed = Profile<LaserPulsedProfile>;
 
+#endif // PROFILE_HPP

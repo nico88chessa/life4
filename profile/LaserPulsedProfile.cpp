@@ -1,5 +1,13 @@
 #include <LaserPulsedProfile.hpp>
 
+LaserPulsedProfile::LaserPulsedProfile()
+    : LaserPulsedProfile(
+          defaultPower,
+          defaultPulseWidth,
+          defaultFrequency,
+          defaultMaxPulsesNumber,
+          defaultMinPulsesNumber) { }
+
 LaserPulsedProfile::LaserPulsedProfile(
         quint32 _power,
         float _pulseWidth,

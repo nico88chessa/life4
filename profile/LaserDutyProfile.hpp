@@ -10,6 +10,10 @@ public:
     using Ptr = LaserDutyProfile*;
     using ConstPtr = const LaserDutyProfile*;
 
+protected:
+    static constexpr quint32 defaultDuty = 70;
+    static constexpr float defaultPulseWidth = 5;
+
 private:
     quint32 duty;     // duty cycle [%]
     float pulseWidth; // larghezza dell'impulso reale [us]
@@ -30,24 +34,17 @@ public:
     virtual void setPower(quint32 value) { power = value; }
 
     virtual float getMinTimeOn() const { return minTimeOn; }
-    virtual float getMaxTimeOn() const override {
-        qDebug() << "jowengownegowno";
-        return maxTimeOn;
-    }
+    virtual float getMaxTimeOn() const { return maxTimeOn; }
 
 private:
     inline void updateTimeOn();
 
 };
 
-template <class T>
-struct isLaserDutyProfile {
-    constexpr static bool value = false;
-};
-
 template <>
-struct isLaserDutyProfile<LaserDutyProfile> {
+struct isLaserBaseProfile<LaserDutyProfile> {
     constexpr static bool value = true;
+    using type = LaserDutyProfile;
 };
 
 #endif // LASERDUTYPROFILE_HPP

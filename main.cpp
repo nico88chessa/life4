@@ -4,26 +4,26 @@
 #include <MathUtils.hpp>
 #include <QtDebug>
 
+
 int main(int argc, char** argv) {
 
     LaserDutyProfile profile(100, 69, 5);
-
-//    profile.setMaxTimeOn(0);
     profile.setDuty(80);
     profile.setDuty(70);
     profile.setDuty(0);
 
-    LaserBaseProfile&& test(std::move(profile));
-    test.getMaxTimeOn();
-
-//    Profile prova(profile);
-    Profile<LaserDutyProfile> prova(LaserDutyProfile(100, 69, 5));
+    Profile<LaserDutyProfile> prova("prova", 1, 1000, 2);
+    qDebug() << std::is_same<LaserDutyProfile, LaserDutyProfile>();
     prova.getPixelTime();
-
-//    prova.getPixelTime();
-
     qDebug() << isLaserBaseProfile<LaserDutyProfile>::value;
-    qDebug() << isLaserDutyProfile<LaserDutyProfile>::value;
+
+    LaserDutyProfile test = prova.getLaserConfiguration();
+
+    Profile<LaserDutyProfile> prova2;
+    prova2.getPixelTime();
+
+    Profile<LaserPulsedProfile> provaPulsed;
+    provaPulsed.getPixelTime();
 
     return 0;
 }

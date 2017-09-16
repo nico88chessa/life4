@@ -15,7 +15,15 @@ private:
     float pulseWidth;           // larghezza impulso [us]
     float frequency;            // frequenza laser [Hz]
 
+protected:
+    static constexpr quint32 defaultMinPulsesNumber = 0;
+    static constexpr quint32 defaultMaxPulsesNumber = 1;
+    static constexpr float defaultPulseWidth = 100;
+    static constexpr float defaultFrequency = 1000;
+
 public:
+    LaserPulsedProfile();
+
     LaserPulsedProfile(
             quint32 _power,
             float _pulseWidth,
@@ -44,14 +52,10 @@ public:
 
 };
 
-template <class T>
-struct isLaserPulsedProfile {
-    constexpr static bool value = false;
-};
-
 template <>
-struct isLaserPulsedProfile<LaserPulsedProfile> {
+struct isLaserBaseProfile<LaserPulsedProfile> {
     constexpr static bool value = true;
+    using type = LaserPulsedProfile;
 };
 
 #endif // PULSEDPROFILE_HPP

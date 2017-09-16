@@ -4,10 +4,16 @@
 #include <QtGlobal>
 #include <QtMath>
 
+
 class LaserBaseProfile {
 public:
     using Ptr = LaserBaseProfile *;
     using ConstPtr = const LaserBaseProfile *;
+
+protected:
+    static constexpr float defaultMaxTimeOn = 1;
+    static constexpr quint32 defaultPower = 100;
+    static constexpr float defaultMinTimeOn = 0;
 
 protected:
     quint32 power;          // potenza del laser [%]
@@ -33,11 +39,13 @@ public:
 template <class T>
 struct isLaserBaseProfile {
     constexpr static bool value = false;
+    using type = T;
 };
 
 template <>
 struct isLaserBaseProfile<LaserBaseProfile> {
     constexpr static bool value = true;
+    using type = LaserBaseProfile;
 };
 
 #endif // LASERBASEPROFILE_HPP
