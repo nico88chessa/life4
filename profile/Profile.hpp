@@ -34,22 +34,18 @@ public:
     Profile(const type& _laserConfiguration)
         : Profile ("Empty", 1, 1, 1) { }
 
-    Profile(const QString& _name, quint32 _beams, float _yResolution, quint32 _shotsPerPixel, const type& _laserConfiguration)
-        : name(_name), beams(_beams), yResolution(_yResolution), shotsPerPixel(_shotsPerPixel), laserConfiguration(_laserConfiguration) {
-
-        static_assert(isLaserBaseProfile<L>::value, "template type L isn't a Laser Base profile");
-        qDebug() << "Profile Constructor 2";
-    }
-
     template <typename... Types>
     Profile(const QString& _name,
             quint32 _beams,
             float _yResolution,
             quint32 _shotsPerPixel,
             Types... args)
-        : name(_name), beams(_beams), yResolution(_yResolution), shotsPerPixel(_shotsPerPixel), laserConfiguration(args...) {
+        : Profile(_name, _beams, _yResolution, _shotsPerPixel, type(args...)) { }
 
-        static_assert(isLaserBaseProfile<L>::value, "template type L isn't a Laser Base profile");
+    Profile(const QString& _name, quint32 _beams, float _yResolution, quint32 _shotsPerPixel, const type& _laserConfiguration)
+        : name(_name), beams(_beams), yResolution(_yResolution), shotsPerPixel(_shotsPerPixel), laserConfiguration(_laserConfiguration) {
+
+        static_assert(isLaserBaseProfile<type>::value, "template type L isn't a Laser Base profile");
         qDebug() << "Profile Constructor 2";
     }
 
@@ -94,7 +90,7 @@ public:
         return laserConfiguration;
     }
 
-    void setLaserConfiguration(const type &value) {
+    void setLaserConfiguration(const type& value) {
         laserConfiguration = value;
     }
 

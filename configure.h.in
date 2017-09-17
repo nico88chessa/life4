@@ -1,0 +1,7 @@
+#ifndef CONFIGURE_H_IN
+#define CONFIGURE_H_IN
+
+static constexpr char APPLICATION_NAME[] = "@CMAKE_PROJECT_NAME@";
+static constexpr char LIFE_VERSION[] = "@LIFE_VERSION@";
+
+#endif // CONFIGURE_H_IN
