@@ -7,10 +7,13 @@
 #include <MainWindow.hpp>
 #include <QApplication>
 #include <QFile>
+#include <QTranslator>
 
 int main(int argc, char** argv) {
 
-    QString prova(QObject::tr("fmseo"));
+    QString prova(QObject::tr("fmsasdeo"));
+    QString prova2(QObject::tr("PROVA2"));
+
     //LaserDutyProfile profile(100, 69, 5);
     //profile.setDuty(80);
     //profile.setDuty(70);
@@ -41,9 +44,18 @@ int main(int argc, char** argv) {
     QString styleSheet = QLatin1String(file.readAll());
     app.setStyleSheet(":/styles/test1.qss");
 
-//    app.setStyleSheet(":/styles/test1.qss");
+    QTranslator translator;
+    qDebug() << "loading: " << translator.load(":/languages/LIFE_EN.qm");
+    app.installTranslator(&translator);
+
+    QTranslator translator2;
+    qDebug() << "loading: " << translator2.load(":/languages/LIFE_IT.qm");
+    app.installTranslator(&translator2);
+
+
     MainWindow mainWindow;
     mainWindow.show();
+
 
     app.exec();
 

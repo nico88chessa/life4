@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>styles/test1.qss</file>
         <file>styles/test2.qss</file>
+        <file>languages/LIFE_EN.qm</file>
+        <file>languages/LIFE_IT.qm</file>
     </qresource>
 </RCC>
