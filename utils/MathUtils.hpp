@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-namespace dv {
+namespace life {
 
 class MathUtils {
 public:

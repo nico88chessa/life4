@@ -1,8 +1,10 @@
 #ifndef LASERPULSEDPROFILE_HPP
 #define LASERPULSEDPROFILE_HPP
 
-#include <LaserBaseProfile.hpp>
+#include "LaserBaseProfile.hpp"
 #include <MathUtils.hpp>
+
+namespace life {
 
 class LaserPulsedProfile : public LaserBaseProfile {
 public:
@@ -57,5 +59,7 @@ struct isLaserBaseProfile<LaserPulsedProfile> {
     constexpr static bool value = true;
     using type = LaserPulsedProfile;
 };
+
+}
 
 #endif // PULSEDPROFILE_HPP

@@ -1,4 +1,6 @@
-#include <LaserPulsedProfile.hpp>
+#include "LaserPulsedProfile.hpp"
+
+using namespace life;
 
 LaserPulsedProfile::LaserPulsedProfile()
     : LaserPulsedProfile(
@@ -28,7 +30,7 @@ quint32 LaserPulsedProfile::getMinPulsesNumber() const {
 void LaserPulsedProfile::setMinPulsesNumber(const quint32& value) {
 
     minPulsesNumber = value;
-    setMinTimeOn(dv::MathUtils::roundf(1 / frequency * minPulsesNumber, 2) );
+    setMinTimeOn(MathUtils::roundf(1 / frequency * minPulsesNumber, 2) );
 }
 
 quint32 LaserPulsedProfile::getMaxPulsesNumber() const {
@@ -38,7 +40,7 @@ quint32 LaserPulsedProfile::getMaxPulsesNumber() const {
 void LaserPulsedProfile::setMaxPulsesNumber(const quint32& value) {
 
     maxPulsesNumber = value;
-    setMaxTimeOn(dv::MathUtils::roundf(1 / frequency * maxPulsesNumber, 2) );
+    setMaxTimeOn(MathUtils::roundf(1 / frequency * maxPulsesNumber, 2) );
 }
 
 float LaserPulsedProfile::getPulseWidth() const {

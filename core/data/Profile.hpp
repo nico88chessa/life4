@@ -2,10 +2,12 @@
 #define PROFILE_HPP
 
 #include <QString>
-#include <LaserBaseProfile.hpp>
-#include <LaserDutyProfile.hpp>
-#include <LaserPulsedProfile.hpp>
+#include "LaserBaseProfile.hpp"
+#include "LaserDutyProfile.hpp"
+#include "LaserPulsedProfile.hpp"
 #include <utility>
+
+namespace life {
 
 static constexpr char defaultName[] = "Empty";
 static constexpr quint32 defaultBeams = 1;
@@ -99,5 +101,7 @@ public:
 using ProfileBase = Profile<LaserBaseProfile>;
 using ProfileDuty = Profile<LaserDutyProfile>;
 using ProfilePulsed = Profile<LaserPulsedProfile>;
+
+}
 
 #endif // PROFILE_HPP

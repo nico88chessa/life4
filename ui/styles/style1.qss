@@ -1,0 +1,13 @@
+QMainWindow {
+    background-color: rgb(85, 170, 127);
+}
+
+QLineEdit {
+    border: 0px;
+    padding: 10px;
+}
+
+QPushButton {
+    border: 0px;
+    padding: 10px;
+}

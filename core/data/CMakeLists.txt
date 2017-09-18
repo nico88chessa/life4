@@ -3,6 +3,7 @@ SET(CLASS_NAMES
     "LaserBaseProfile"
     "LaserDutyProfile"
     "Profile"
+    "Cylinder"
     )
 
 FOREACH(ITEM ${CLASS_NAMES})

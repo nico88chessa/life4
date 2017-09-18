@@ -1,6 +1,6 @@
 #include <iostream>
-#include <LaserDutyProfile.hpp>
-#include <Profile.hpp>
+#include <core/data/LaserDutyProfile.hpp>
+#include <core/data/Profile.hpp>
 #include <MathUtils.hpp>
 #include <QtDebug>
 #include <configure.h>
@@ -8,6 +8,7 @@
 #include <QApplication>
 #include <QFile>
 #include <QTranslator>
+#include <ui/CylinderDialog.hpp>
 
 int main(int argc, char** argv) {
 
@@ -38,23 +39,26 @@ int main(int argc, char** argv) {
 
     QApplication app(argc, argv);
 
-    QFile file(":/styles/test1.qss");
+    QFile file(":/styles/style1.qss");
     if (!file.open(QFile::ReadOnly))
         return 0;
     QString styleSheet = QLatin1String(file.readAll());
-    app.setStyleSheet(":/styles/test1.qss");
+    app.setStyleSheet(styleSheet);
 
     QTranslator translator;
-    qDebug() << "loading: " << translator.load(":/languages/LIFE_EN.qm");
+    qDebug() << "loading: " << translator.load(":/lang/LIFE_EN.qm");
     app.installTranslator(&translator);
 
     QTranslator translator2;
-    qDebug() << "loading: " << translator2.load(":/languages/LIFE_IT.qm");
+    qDebug() << "loading: " << translator2.load(":/lang/LIFE_IT.qm");
     app.installTranslator(&translator2);
 
 
     MainWindow mainWindow;
     mainWindow.show();
+
+    CylinderDialog dialog;
+    dialog.show();
 
 
     app.exec();

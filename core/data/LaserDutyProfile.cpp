@@ -1,5 +1,7 @@
 #include "LaserDutyProfile.hpp"
 
+using namespace life;
+
 LaserDutyProfile::LaserDutyProfile()
     : LaserDutyProfile(defaultPower, defaultDuty, defaultMinTimeOn) { }
 
@@ -32,6 +34,6 @@ void LaserDutyProfile::setPulseWidth(const float& value) {
 
 void LaserDutyProfile::updateTimeOn() {
 
-    float timeOnMax = dv::MathUtils::roundf(pulseWidth * 100 / duty, 2);
+    float timeOnMax = MathUtils::roundf(pulseWidth * 100 / duty, 2);
     this->setMaxTimeOn(timeOnMax);
 }

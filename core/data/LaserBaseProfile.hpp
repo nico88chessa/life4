@@ -4,6 +4,7 @@
 #include <QtGlobal>
 #include <QtMath>
 
+namespace life {
 
 class LaserBaseProfile {
 public:
@@ -47,6 +48,8 @@ struct isLaserBaseProfile<LaserBaseProfile> {
     constexpr static bool value = true;
     using type = LaserBaseProfile;
 };
+
+}
 
 #endif // LASERBASEPROFILE_HPP
 

@@ -47,12 +47,12 @@ SET(PROJECT_TS_FILES "" CACHE INTERNAL "ts project files")
 SET(PROJECT_QM_FILES "" CACHE INTERNAL "qm project files")
 SET(UPDATE_TS CACHE BOOL "") # questo lo setto qui cosi poi lo posso modificare da QtCreator
 
-SET(PPROJECT_FOLDERS
-    "${PROJECT_SOURCE_DIR}/profile"
+SET(PROJECT_FOLDERS
+    "${PROJECT_SOURCE_DIR}/core"
     "${PROJECT_SOURCE_DIR}/utils"
     "${PROJECT_SOURCE_DIR}/ui")
 
-FOREACH(item ${PPROJECT_FOLDERS})
+FOREACH(item ${PROJECT_FOLDERS})
     MESSAGE("Folder: " ${item})
     INCLUDE_DIRECTORIES(${item})
     ADD_SUBDIRECTORY(${item})
@@ -105,6 +105,6 @@ FOREACH(QM_ITEM ${PROJECT_QM_FILES})
     ADD_CUSTOM_COMMAND(
         TARGET ${PROJECT_NAME}-${LIFE_VERSION}
         PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_BINARY_DIR}/${QM_ITEM}" "${PROJECT_SOURCE_DIR}/ui/languages/${QM_ITEM}"
+        COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_BINARY_DIR}/${QM_ITEM}" "${PROJECT_SOURCE_DIR}/ui/lang/${QM_ITEM}"
         )
 ENDFOREACH(QM_ITEM)

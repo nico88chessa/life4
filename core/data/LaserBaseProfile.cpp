@@ -1,5 +1,7 @@
 #include "LaserBaseProfile.hpp"
 
+using namespace life;
+
 LaserBaseProfile::LaserBaseProfile()
     : LaserBaseProfile(defaultPower, defaultMinTimeOn, defaultMaxTimeOn) { }
 

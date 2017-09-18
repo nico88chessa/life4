@@ -1,6 +1,6 @@
 SET(SUBFOLDERS
     "${CMAKE_CURRENT_SOURCE_DIR}/styles"
-    "${CMAKE_CURRENT_SOURCE_DIR}/languages"
+    "${CMAKE_CURRENT_SOURCE_DIR}/lang"
 )
 
 FOREACH(FOLDER ${SUBFOLDERS})
@@ -10,8 +10,9 @@ FOREACH(FOLDER ${SUBFOLDERS})
 ENDFOREACH(FOLDER)
 
 SET(UI_CLASS_NAMES
-    "MainWindow"
     "resources"
+    "MainWindow"
+    "CylinderDialog"
     )
 
 FOREACH(ITEM ${UI_CLASS_NAMES})

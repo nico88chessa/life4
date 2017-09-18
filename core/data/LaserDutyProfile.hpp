@@ -1,9 +1,11 @@
 #ifndef LASERDUTYPROFILE_HPP
 #define LASERDUTYPROFILE_HPP
 
-#include <LaserBaseProfile.hpp>
+#include "LaserBaseProfile.hpp"
 #include <MathUtils.hpp>
 #include <QtDebug>
+
+namespace life {
 
 class LaserDutyProfile : public LaserBaseProfile {
 public:
@@ -46,5 +48,7 @@ struct isLaserBaseProfile<LaserDutyProfile> {
     constexpr static bool value = true;
     using type = LaserDutyProfile;
 };
+
+}
 
 #endif // LASERDUTYPROFILE_HPP
