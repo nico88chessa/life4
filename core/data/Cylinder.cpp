@@ -6,7 +6,7 @@ Cylinder::Cylinder()
     : Cylinder(defaultLength, defaultCircumference, defaultStartAt, defaultCrossAt) { }
 
 Cylinder::Cylinder(float _length, float _diameter, float _startAt, float _crossAt)
-    : length(_length), circumference(_diameter * M_PI), startAt(_startAt), crossAt(_crossAt) { }
+    : length(_length), circumference(_diameter * M_PIl), startAt(_startAt), crossAt(_crossAt) { }
 
 float Cylinder::getLength() const { return length; }
 
@@ -24,6 +24,6 @@ float Cylinder::getCrossAt() const { return crossAt; }
 
 void Cylinder::setCrossAt(float value) { crossAt = value; }
 
-float Cylinder::getDiameter() const { return this->circumference / M_PI; }
+float Cylinder::getDiameter() const { return this->circumference / M_PIl; }
 
-void Cylinder::setDiameter(float value) { this->circumference = value *M_PI; }
+void Cylinder::setDiameter(float value) { this->circumference = value *M_PIl; }

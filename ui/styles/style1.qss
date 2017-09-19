@@ -11,3 +11,11 @@ QPushButton {
     border: 0px;
     padding: 10px;
 }
+
+LineEditIntValidated[valid="false"] {
+    color: rgb(255, 0 ,0);
+}
+
+LineEditDoubleValidated[valid="false"] {
+    color: rgb(255, 0 ,0);
+}
