@@ -1,14 +1,14 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include <QMainWindow>
+#include <widgets/UnmovableMainWindow.hpp>
 #include <QFile>
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow {
+class MainWindow : public life::UnmovableMainWindow {
     Q_OBJECT
 
 public:
@@ -18,7 +18,6 @@ public:
 public slots:
     void click1();
     void click2();
-
 
 private:
     Ui::MainWindow *ui;

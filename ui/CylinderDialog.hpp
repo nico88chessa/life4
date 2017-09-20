@@ -1,13 +1,14 @@
 #ifndef CYLINDERDIALOG_HPP
 #define CYLINDERDIALOG_HPP
 
-#include <QDialog>
+#include <widgets/LineEditValidated.hpp>
+#include <widgets/UnmovableDialog.hpp>
 
 namespace Ui {
 class CylinderDialog;
 }
 
-class CylinderDialog : public QDialog {
+class CylinderDialog : public life::UnmovableDialog {
     Q_OBJECT
 
 public:

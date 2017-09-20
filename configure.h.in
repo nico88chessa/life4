@@ -1,7 +1,12 @@
 #ifndef CONFIGURE_H_IN
 #define CONFIGURE_H_IN
 
+namespace life {
+
 static constexpr char APPLICATION_NAME[] = "@CMAKE_PROJECT_NAME@";
 static constexpr char LIFE_VERSION[] = "@LIFE_VERSION@";
+static constexpr char ORGANIZATION[] = "@ORGANIZATION@";
+
+}
 
 #endif // CONFIGURE_H_IN

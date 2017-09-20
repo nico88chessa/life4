@@ -1,4 +1,3 @@
-#include <iostream>
 #include <core/data/LaserDutyProfile.hpp>
 #include <core/data/Profile.hpp>
 #include <MathUtils.hpp>
@@ -9,11 +8,19 @@
 #include <QFile>
 #include <QTranslator>
 #include <ui/CylinderDialog.hpp>
+#include <core/data/MachineParameters.hpp>
+#include <widgets/UnmovableMainWindow.hpp>
 
 int main(int argc, char** argv) {
 
     QString prova(QObject::tr("fmsasdeo"));
     QString prova2(QObject::tr("PROVA2"));
+
+    life::MachineParameters params;
+
+    params.setValue(life::machineparameters::PREF_GUI_LANGUAGE, "EN");
+
+    params.flush();
 
     //LaserDutyProfile profile(100, 69, 5);
     //profile.setDuty(80);
@@ -63,8 +70,8 @@ int main(int argc, char** argv) {
 
     app.exec();
 
-    qDebug() << LIFE_VERSION;
-    qDebug() << APPLICATION_NAME;
+    qDebug() << life::LIFE_VERSION;
+    qDebug() << life::APPLICATION_NAME;
 
     return 0;
 }

@@ -2,11 +2,10 @@
 #include <ui_MainWindow.h>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent, Qt::WindowFlags(Qt::FramelessWindowHint)),
+    : life::UnmovableMainWindow(parent, Qt::WindowFlags(Qt::FramelessWindowHint)),
       ui(new Ui::MainWindow) {
 
     ui->setupUi(this);
-//    this->setFixedSize(this->size());
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::click1);
     connect(ui->pushButton_2, &QPushButton::clicked, this, &MainWindow::click2);
 
