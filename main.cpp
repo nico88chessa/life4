@@ -52,20 +52,17 @@ int main(int argc, char** argv) {
     QString styleSheet = QLatin1String(file.readAll());
     app.setStyleSheet(styleSheet);
 
-    QTranslator translator;
-    qDebug() << "loading: " << translator.load(":/lang/LIFE_EN.qm");
-    app.installTranslator(&translator);
+//    QTranslator translator;
+//    qDebug() << "loading: " << translator.load(":/lang/LIFE_EN.qm");
+//    app.installTranslator(&translator);
 
-    QTranslator translator2;
-    qDebug() << "loading: " << translator2.load(":/lang/LIFE_IT.qm");
-    app.installTranslator(&translator2);
+//    QTranslator translator2;
+//    qDebug() << "loading: " << translator2.load(":/lang/LIFE_IT.qm");
+//    app.installTranslator(&translator2);
 
 
     MainWindow mainWindow;
     mainWindow.show();
-
-    CylinderDialog dialog;
-    dialog.show();
 
 
     app.exec();

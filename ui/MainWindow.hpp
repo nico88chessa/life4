@@ -15,12 +15,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-public slots:
-    void click1();
-    void click2();
-
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void hideMenu();
+
 };
 
 #endif // MAINWINDOW_HPP

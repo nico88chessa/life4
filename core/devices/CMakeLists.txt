@@ -11,6 +11,7 @@ FOREACH(ITEM ${SUBFOLDERS})
 ENDFOREACH()
 
 SET(ITEMS
+    "AbstractDevice"
     "AbstractLaser"
     )
 

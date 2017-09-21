@@ -6,8 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
       ui(new Ui::MainWindow) {
 
     ui->setupUi(this);
-    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::click1);
-    connect(ui->pushButton_2, &QPushButton::clicked, this, &MainWindow::click2);
+
+    connect(ui->hideMenuButton, &QPushButton::clicked, this, &MainWindow::hideMenu);
 
 }
 
@@ -15,20 +15,11 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::click1() {
-    QFile file(":/styles/test1.qss");
-    if (!file.open(QFile::ReadOnly))
-        return;
-    QString styleSheet = QLatin1String(file.readAll());
-    this->setStyleSheet(styleSheet);
+void MainWindow::hideMenu() {
 
+    if (ui->buttonFrame->maximumWidth() == 0)
+        ui->buttonFrame->setMaximumWidth(200);
+    else
+        ui->buttonFrame->setMaximumWidth(0);
 }
 
-void MainWindow::click2() {
-    QFile file(":/styles/test2.qss");
-    if (!file.open(QFile::ReadOnly))
-        return;
-    QString styleSheet = QLatin1String(file.readAll());
-    this->setStyleSheet(styleSheet);
-
-}
