@@ -7,9 +7,9 @@
 #include <QApplication>
 #include <QFile>
 #include <QTranslator>
-#include <ui/CylinderDialog.hpp>
 #include <core/data/MachineParameters.hpp>
 #include <widgets/UnmovableMainWindow.hpp>
+#include <CylinderDialog.hpp>
 
 int main(int argc, char** argv) {
 
