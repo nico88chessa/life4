@@ -11,8 +11,6 @@ void MachineParameters::load() {
 
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, life::ORGANIZATION, life::APPLICATION_NAME);
 
-    using namespace life::machineparameters;
-
     parameters.insert(PREF_MACHINE_ETH_INTERFACE_LAN.key,
                       settings.value(PREF_MACHINE_ETH_INTERFACE_LAN.key, PREF_MACHINE_ETH_INTERFACE_LAN.defaultValue).
                       value<MACHINE_PARAMETER_TYPE(PREF_MACHINE_ETH_INTERFACE_LAN)>());

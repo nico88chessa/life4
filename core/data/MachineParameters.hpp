@@ -59,12 +59,7 @@ public:
 public:
 
     template <typename T>
-    QVariant getValue(const machineparameters::MachineParameter<T>& parameter) const {
-        return parameters.value(parameter.key);
-    }
-
-    template <typename T>
-    T getValue2(const machineparameters::MachineParameter<T>& parameter) const {
+    T getValue(const machineparameters::MachineParameter<T>& parameter) const {
         return static_cast<QVariant>(parameters.value(parameter.key)).value<T>();
     }
 
@@ -72,6 +67,10 @@ public:
     void setValue(const machineparameters::MachineParameter<T>& parameter, const T& value) {
         parameters.insert(parameter.key, value);
     }
+
+    const QMap<QString, QVariant>& getMap() const { return parameters; }
+
+    int size() const { return parameters.size(); }
 
     void load();
 
