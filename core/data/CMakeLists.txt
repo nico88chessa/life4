@@ -4,6 +4,9 @@ SET(ITEMS
     "LaserDutyProfile"
     "Profile"
     "Cylinder"
+    "CommonIO"
+    "AnalogicIO"
+    "DigitalIO"
     "MachineParameters"
     )
 
