@@ -15,6 +15,14 @@ DECL_STANDARD_DIGITAL_IO(GreenLamp, 4, PLC, OUTPUT, false, , false)
 DECL_STANDARD_DIGITAL_IO(RedLamp, 5, PLC, OUTPUT, false, , false)
 
 
+static constexpr char DIGITAL_PARAMETER_NAME[] = "Name";
+static constexpr char DIGITAL_PARAMETER_CHANNEL[] = "Channel";
+static constexpr char DIGITAL_PARAMETER_DEVICE[] = "Device";
+static constexpr char DIGITAL_PARAMETER_DIRECTION[] = "Direction";
+static constexpr char DIGITAL_PARAMETER_ISALARM[] = "IsAlarm";
+static constexpr char DIGITAL_PARAMETER_ALARMTEXT[] = "AlarmText";
+static constexpr char DIGITAL_PARAMETER_INVERTLOGIC[] = "InvertLogic";
+
 MachineDigitalIO::MachineDigitalIO() {
     load();
 }
@@ -27,13 +35,13 @@ void MachineDigitalIO::load() {
     for (int i=0; i<size; ++i) {
         settings.setArrayIndex(i);
         DigitalIO io;
-        io.name = settings.value("name").value<QString>();
-        io.channel = settings.value("channel").value<quint32>();
-        io.device = str2DeviceType(settings.value("device").value<QString>());
-        io.direction = str2DirectionType(settings.value("direction").value<QString>());
-        io.isAlarm = settings.value("isAlarm").value<bool>();
-        io.alarmText = settings.value("alarmText").value<QString>();
-        io.invertLogic = settings.value("invertLogic").value<bool>();
+        io.name = settings.value(DIGITAL_PARAMETER_NAME).value<QString>();
+        io.channel = settings.value(DIGITAL_PARAMETER_CHANNEL).value<quint32>();
+        io.device = str2DeviceType(settings.value(DIGITAL_PARAMETER_DEVICE).value<QString>());
+        io.direction = str2DirectionType(settings.value(DIGITAL_PARAMETER_DIRECTION).value<QString>());
+        io.isAlarm = settings.value(DIGITAL_PARAMETER_ISALARM).value<bool>();
+        io.alarmText = settings.value(DIGITAL_PARAMETER_ALARMTEXT).value<QString>();
+        io.invertLogic = settings.value(DIGITAL_PARAMETER_INVERTLOGIC).value<bool>();
         listDigitalIO.insert(io.name, io);
     }
 
@@ -69,13 +77,13 @@ void MachineDigitalIO::flush() const {
     int index = 0;
     for (auto io: listDigitalIO.values()) {
         settings.setArrayIndex(++index);
-        settings.setValue("name", io.name);
-        settings.setValue("channel", io.channel);
-        settings.setValue("device", deviceType2Str(io.device));
-        settings.setValue("direction", directionType2Str(io.direction));
-        settings.setValue("isAlarm", io.isAlarm);
-        settings.setValue("alarmText", io.alarmText);
-        settings.setValue("invertLogic", io.invertLogic);
+        settings.setValue(DIGITAL_PARAMETER_NAME, io.name);
+        settings.setValue(DIGITAL_PARAMETER_CHANNEL, io.channel);
+        settings.setValue(DIGITAL_PARAMETER_DEVICE, deviceType2Str(io.device));
+        settings.setValue(DIGITAL_PARAMETER_DIRECTION, directionType2Str(io.direction));
+        settings.setValue(DIGITAL_PARAMETER_ISALARM, io.isAlarm);
+        settings.setValue(DIGITAL_PARAMETER_ALARMTEXT, io.alarmText);
+        settings.setValue(DIGITAL_PARAMETER_INVERTLOGIC, io.invertLogic);
     }
 
     settings.endArray();
