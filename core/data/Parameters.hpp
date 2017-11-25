@@ -1,16 +1,12 @@
-#ifndef MACHINEPARAMETERS_HPP
-#define MACHINEPARAMETERS_HPP
+#ifndef PARAMETERS_HPP
+#define PARAMETERS_HPP
 
-#include <iostream>
 #include <QString>
-#include <QVariant>
-#include <QMap>
-#include <QSettings>
-#include <configure.h>
 
 namespace life {
 
 namespace machineparameters {
+
 
 template <typename T>
 struct MachineParameter {
@@ -84,46 +80,9 @@ DECL_MACHINE_PARAMETER(CYLINDER_MINSPEED, quint32, "Cylinder/MinSpeed", 10)
 DECL_MACHINE_PARAMETER(CYLINDER_MAXSPEED, quint32, "Cylinder/MaxSpeed", 1200)
 DECL_MACHINE_PARAMETER(CYLINDER_NUMOFENCODERS, quint32, "Cylinder/NumOfEncoders", 1)
 
-}
-
-class MachineParameters {
-public:
-    using Ptr = MachineParameters *;
-    using ConstPtr = const MachineParameters *;
-
-private:
-    QMap<QString, QVariant> parameters;
-
-public:
-    MachineParameters();
-
-public:
-
-    template <typename T>
-    T getValue(const machineparameters::MachineParameter<T>& parameter) const {
-        if (parameters.contains(parameter.key))
-            return static_cast<QVariant>(parameters.value(parameter.key)).value<T>();
-        return T();
-    }
-
-    template <typename T>
-    void setValue(const machineparameters::MachineParameter<T>& parameter, const T& value) {
-        if (parameters.contains(parameter.key))
-            parameters.insert(parameter.key, value);
-    }
-
-    const QMap<QString, QVariant>& getMap() const { return parameters; }
-
-    int size() const { return parameters.size(); }
-
-    void load();
-
-    void flush() const;
-
-};
 
 }
 
+}
 
-
-#endif // MACHINEPARAMETERS_HPP
+#endif // PARAMETERS_HPP

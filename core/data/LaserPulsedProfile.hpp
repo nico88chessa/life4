@@ -2,7 +2,7 @@
 #define LASERPULSEDPROFILE_HPP
 
 #include "LaserBaseProfile.hpp"
-#include <MathUtils.hpp>
+#include <global/utils/MathUtils.hpp>
 
 namespace life {
 

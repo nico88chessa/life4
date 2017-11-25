@@ -1,91 +1,91 @@
 #include <core/data/LaserDutyProfile.hpp>
 #include <core/data/Profile.hpp>
-#include <MathUtils.hpp>
+#include <global/utils/MathUtils.hpp>
 #include <QtDebug>
 #include <configure.h>
 #include <MainWindow.hpp>
 #include <QApplication>
 #include <QFile>
 #include <QTranslator>
-#include <core/data/MachineParameters.hpp>
+#include <core/data/Parameters.hpp>
 #include <widgets/UnmovableMainWindow.hpp>
 #include <CylinderDialog.hpp>
+#include <core/data/DigitalIO.hpp>
+#include <memory>
+#include <ui/SettingsPage.hpp>
+
+template <typename T>
+class A {
+public:
+    virtual T getValue() const {
+        return v;
+    }
+
+protected:
+    T v;
+};
+
+template <typename T>
+class B : public A<T> {
+public:
+    virtual T getValue() const {
+        return A<T>::v + A<T>::v;
+    }
+};
+
+template <quint32> struct valueIsOF { using type = void; };
+template <> struct valueIsOF<1> { using type = QString; };
+template <> struct valueIsOF<2> { using type = char; };
 
 int main(int argc, char** argv) {
 
-    QString prova(QObject::tr("fmsasdeo"));
-    QString prova2(QObject::tr("PROVA2"));
-
-    life::MachineParameters params;
-
-    params.setValue(life::machineparameters::PREF_GUI_LANGUAGE, "EN");
-
-    params.flush();
-
-    //LaserDutyProfile profile(100, 69, 5);
-    //profile.setDuty(80);
-    //profile.setDuty(70);
-    //profile.setDuty(0);
-    //
-    //Profile<LaserDutyProfile> prova("prova", 1, 1000, 2);
-    //qDebug() << std::is_same<LaserDutyProfile, LaserDutyProfile>();
-    //prova.getPixelTime();
-    //qDebug() << isLaserBaseProfile<LaserDutyProfile>::value;
-    //
-    //LaserDutyProfile test = prova.getLaserConfiguration();
-    //
-    //Profile<LaserDutyProfile> prova2;
-    //prova2.getPixelTime();
-    //
-    //Profile<LaserPulsedProfile> provaPulsed;
-    //provaPulsed.getPixelTime();
-
-    //Profile<LaserDutyProfile> prova("prova", 1, 1000, 2, 10, 7, 2);
-    //
-    //LaserDutyProfile pro = prova.getLaserConfiguration();
-
     QApplication app(argc, argv);
 
-    QFile file(":/styles/style1.qss");
-    if (!file.open(QFile::ReadOnly))
-        return 0;
-    QString styleSheet = QLatin1String(file.readAll());
-    app.setStyleSheet(styleSheet);
+    MainWindow test;
+    test.show();
 
-//    QTranslator translator;
-//    qDebug() << "loading: " << translator.load(":/lang/LIFE_EN.qm");
-//    app.installTranslator(&translator);
-
-//    QTranslator translator2;
-//    qDebug() << "loading: " << translator2.load(":/lang/LIFE_IT.qm");
-//    app.installTranslator(&translator2);
+    return app.exec();
 
 
-    MainWindow mainWindow;
-    mainWindow.show();
+/*****************************************************
+ *
+    auto test1 = std::make_shared<B<int> >();
+    auto test2 = std::make_shared<A<int> >();
+    auto test3 = std::make_shared<A<int> >();
 
+    std::vector<std::shared_ptr<A<int> > > vet;
 
-    app.exec();
+    vet.push_back(std::move(test1));
+    vet.push_back(std::move(test2));
+    vet.push_back(std::move(test3));
 
-    qDebug() << life::LIFE_VERSION;
-    qDebug() << life::APPLICATION_NAME;
+    auto test = vet.at(0);
+    using testType = std::remove_reference<decltype(*test)>::type;
+    auto v = dynamic_cast<B<float>*>(vet.at(0).get());
+    auto v2 = dynamic_cast<B<int>*>(vet.at(0).get());
+    qDebug() << v2->getValue();
+    if (std::is_base_of< A<int>, testType >::value) {
+        auto testCasting = std::dynamic_pointer_cast<B<int> >(test2);
+        qDebug() << "OK";
+    } else
+        qDebug() << "NOK";
 
-    return 0;
+    qDebug() << "test type: " << typeid(*test).name();
+
+*****************************************************/
+
+//    life::MachineParameters mp;
+//    mp.flush();
+
+//    auto value = mp.getValue(life::machineparameters::AXISX_ACC);
+
+//    valueIsOF<1>::type vTest1 = "true";
+//    valueIsOF<2>::type vTest2 = 2;
+//    valueIsOF<3>::type* vTest3 = nullptr;
+
+//    life::MachineDigitalIO mdi;
+//    mdi.flush();
+
+//    return 0;
 }
 
-//<?xml version="1.0" encoding="UTF-8"?>
-//<profiles>
-//    <profile id="1">
-//        <title>test</title>
-//        <imageResolution>1000.000</imageResolution>
-//        <laserKind>YAGP</laserKind>
-//        <laserSources>1</laserSources>
-//        <laserMin>0.00</laserMin>
-//        <laserMax>1.00</laserMax>
-//        <laserShots>1</laserShots>
-//        <laserPeriod>1.00</laserPeriod>
-//        <referenceDiameter>5.000</referenceDiameter>
-//        <referenceSpeed>10</referenceSpeed>
-//        <referenceZ>0.000</referenceZ>
-//    </profile>
-//</profiles>

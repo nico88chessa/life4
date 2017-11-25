@@ -50,7 +50,7 @@ SET(UPDATE_TS CACHE BOOL "") # questo lo setto qui cosi poi lo posso modificare 
 
 SET(PROJECT_FOLDERS
     "${PROJECT_SOURCE_DIR}/core"
-    "${PROJECT_SOURCE_DIR}/utils"
+    "${PROJECT_SOURCE_DIR}/global"
     "${PROJECT_SOURCE_DIR}/ui")
 
 FOREACH(item ${PROJECT_FOLDERS})

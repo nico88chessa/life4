@@ -83,7 +83,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="workingAreaFrame">
+       <widget class="SettingsPage" name="workingAreaFrame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -97,6 +97,14 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SettingsPage</class>
+   <extends>QFrame</extends>
+   <header>ui/SettingsPage.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

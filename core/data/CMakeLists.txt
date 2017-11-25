@@ -7,7 +7,7 @@ SET(ITEMS
     "CommonIO"
     "AnalogicIO"
     "DigitalIO"
-    "MachineParameters"
+    "Parameters"
     )
 
 

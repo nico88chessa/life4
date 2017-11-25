@@ -1,13 +1,13 @@
-#include "MachineParameters.hpp"
+#include "ParametersManager.hpp"
 
 using namespace life;
 using namespace machineparameters;
 
-MachineParameters::MachineParameters() {
+ParametersManager::ParametersManager() {
     load();
 }
 
-void MachineParameters::load() {
+void ParametersManager::load() {
 
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, life::ORGANIZATION, life::APPLICATION_NAME);
 
@@ -60,7 +60,7 @@ void MachineParameters::load() {
 
 }
 
-void MachineParameters::flush() const {
+void ParametersManager::flush() const {
 
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, life::ORGANIZATION, life::APPLICATION_NAME);
 
