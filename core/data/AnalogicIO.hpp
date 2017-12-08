@@ -1,23 +1,41 @@
 #ifndef ANALOGICTYPES_HPP
 #define ANALOGICTYPES_HPP
 
-#include <configure.h>
-#include "CommonIO.hpp"
+#include "SimpleIO.hpp"
 #include <global/utils/Utility.hpp>
-#include <QSettings>
-#include <QMap>
+#include <QtGlobal>
 
 namespace life {
 
+static constexpr char ANALOGIC_ARRAY_NAME[] = "AnalogicIO";
+
+static constexpr const char* const ANALOGIC_PARAMETER_NAME = SIMPLE_IO_NAME;
+static constexpr const char* const ANALOGIC_PARAMETER_CHANNEL = SIMPLE_IO_CHANNEL;
+static constexpr const char* const ANALOGIC_PARAMETER_DEVICE = SIMPLE_IO_DEVICE;
+static constexpr const char* const ANALOGIC_PARAMETER_DIRECTION = SIMPLE_IO_DIRECTION;
+static constexpr const char* const ANALOGIC_PARAMETER_ISALARM = SIMPLE_IO_ISALARM;
+static constexpr const char* const ANALOGIC_PARAMETER_ALARMTEXT = SIMPLE_IO_ALARMTEXT;
+static constexpr char ANALOGIC_PARAMETER_HYSTERESIS[] = "Hysteresis";
+static constexpr char ANALOGIC_PARAMETER_LOWERLIMIT[] = "LowerLimit";
+static constexpr char ANALOGIC_PARAMETER_UPPERLIMIT[] = "UpperLimit";
+static constexpr char ANALOGIC_PARAMETER_GAIN[] = "Gain";
+static constexpr char ANALOGIC_PARAMETER_OFFSET[] = "Offset";
+static constexpr char ANALOGIC_PARAMETER_MEASUREUNIT[] = "MeasureUnit";
+
+#define ANALOGIC_IO_TYPE(aio) std::remove_const<decltype(aio.gain)>::type
+
 template <typename T>
-struct AnalogicIO : public SimpleIO<T> {
+struct AnalogicIO : public SimpleIO {
     static_assert(isFloat<T>::value || isDouble<T>::value, "AnalogicIO expect only float or double type.");
     using type = T;
 
     AnalogicIO() { }
-    AnalogicIO(const QString& n, unsigned int c, device_type d, direction_type dt, bool ia, const QString& at, bool il)
-        : SimpleIO<type>(n, c, d, dt, ia, at),
-          hysteresis(), lowerLimit(), upperLimit(), measureUnit(), gain(), offset() { }
+    AnalogicIO(const QString& n, unsigned int c, device_type d, direction_type dt, bool ia, const QString& at,
+               type h, type ll, type ul, type g, type o, const QString& mu)
+        : SimpleIO(n, c, d, dt, ia, at),
+          hysteresis(h), lowerLimit(ll), upperLimit(ul), gain(g), offset(o), measureUnit(mu) { }
+
+    virtual ~AnalogicIO() { }
 
     type hysteresis;
     type lowerLimit;
@@ -39,22 +57,19 @@ struct isAnalogicIO<AnalogicIO<T> > {
     using type = T;
 };
 
-class MachineAnalogicIO {
-public:
-    using Ptr = MachineAnalogicIO *;
-    using ConstPtr = const MachineAnalogicIO *;
+using AnalogicIOFloat = AnalogicIO<float>;
+using AnalogicIODouble = AnalogicIO<double>;
 
-private:
-    QMap<QString, AnalogicIO<double> > analogicIO;
+#define DECL_STANDARD_ANALOGIC_IO(TYPE, NAME, CHANNEL, DEVICE, DIRECTION, IS_ALARM, ALARM_TEXT, HYSTERESIS, LOWERLIMIT, UPPERLIMIT, GAIN, OFFSET, MEASUREUNIT) \
+    static const AnalogicIO<TYPE> Analogic##NAME = { #NAME, CHANNEL, DEVICE, DIRECTION, IS_ALARM, ALARM_TEXT, \
+                                                        HYSTERESIS, LOWERLIMIT, UPPERLIMIT, GAIN, OFFSET, MEASUREUNIT };
 
-public:
-    MachineAnalogicIO();
+#define DECL_STANDARD_ANALOGIC_IO_FLOAT(...) DECL_STANDARD_ANALOGIC_IO(float, __VA_ARGS__)
+#define DECL_STANDARD_ANALOGIC_IO_DOUBLE(...) DECL_STANDARD_ANALOGIC_IO(double, __VA_ARGS__)
 
-    void load();
+DECL_STANDARD_ANALOGIC_IO_FLOAT(MirrorTemperature, 1, PLC, INPUT, true, QT_TRANSLATE_NOOP("Header", "Mirror temperature too high!"), 1.0, 20.0, 40.0, 1.0, 0.0, "°C")
 
-    void flush() const;
 
-};
 
 }
 

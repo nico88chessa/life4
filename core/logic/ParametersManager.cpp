@@ -9,8 +9,11 @@ ParametersManager::ParametersManager() {
 
 void ParametersManager::load() {
 
+    using namespace std;
+
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, life::ORGANIZATION, life::APPLICATION_NAME);
 
+    // caricamento parametri
     parameters.insert(MACHINE_ETH_INTERFACE_LAN.key, settings.value(MACHINE_ETH_INTERFACE_LAN.key, MACHINE_ETH_INTERFACE_LAN.defaultValue).value<MACHINE_PARAMETER_TYPE(MACHINE_ETH_INTERFACE_LAN)>());
     parameters.insert(MACHINE_ETH_INTERFACE_DEVICES.key, settings.value(MACHINE_ETH_INTERFACE_DEVICES.key, MACHINE_ETH_INTERFACE_DEVICES.defaultValue).value<MACHINE_PARAMETER_TYPE(MACHINE_ETH_INTERFACE_DEVICES)>());
     parameters.insert(GUI_LANGUAGE.key, settings.value(GUI_LANGUAGE.key, GUI_LANGUAGE.defaultValue).value<MACHINE_PARAMETER_TYPE(GUI_LANGUAGE)>());
@@ -58,13 +61,172 @@ void ParametersManager::load() {
     parameters.insert(CYLINDER_MAXSPEED.key, settings.value(CYLINDER_MAXSPEED.key, CYLINDER_MAXSPEED.defaultValue).value<MACHINE_PARAMETER_TYPE(CYLINDER_MAXSPEED)>());
     parameters.insert(CYLINDER_NUMOFENCODERS.key, settings.value(CYLINDER_NUMOFENCODERS.key, CYLINDER_NUMOFENCODERS.defaultValue).value<MACHINE_PARAMETER_TYPE(CYLINDER_NUMOFENCODERS)>());
 
+    // caricamento IO
+
+    // digitali
+    ios.insert(DigitalPower.name, make_shared<DigitalIO>(DigitalPower));
+    ios.insert(DigitalCycle.name, make_shared<DigitalIO>(DigitalCycle));
+    ios.insert(DigitalEnable.name, make_shared<DigitalIO>(DigitalEnable));
+    ios.insert(DigitalLaserPower.name, make_shared<DigitalIO>(DigitalLaserPower));
+    ios.insert(DigitalGreenLamp.name, make_shared<DigitalIO>(DigitalGreenLamp));
+    ios.insert(DigitalRedLamp.name, make_shared<DigitalIO>(DigitalRedLamp));
+
+    // analogici
+    ios.insert(AnalogicMirrorTemperature.name, make_shared<AnalogicIO<ANALOGIC_IO_TYPE(AnalogicMirrorTemperature)> >(AnalogicMirrorTemperature));
+
+    // lettura IO digitali
+    int size = settings.beginReadArray(DIGITAL_ARRAY_NAME);
+    for (auto&& i=0; i<size; ++i) {
+        settings.setArrayIndex(i);
+        auto name = settings.value(DIGITAL_PARAMETER_NAME).value<QString>();
+
+        if (const auto& io = dynamic_pointer_cast<DigitalIO>(ios.value(name))) {
+            auto channel = settings.value(DIGITAL_PARAMETER_CHANNEL).value<unsigned int>();
+            auto device = str2DeviceType(settings.value(DIGITAL_PARAMETER_DEVICE).value<QString>());
+            auto direction = str2DirectionType(settings.value(DIGITAL_PARAMETER_DIRECTION).value<QString>());
+            auto isAlarm = settings.value(DIGITAL_PARAMETER_ISALARM).value<bool>();
+            auto alarmText = settings.value(DIGITAL_PARAMETER_ALARMTEXT).value<QString>();
+            auto invertLogic = settings.value(DIGITAL_PARAMETER_INVERTLOGIC).value<bool>();
+
+            io->channel = channel;
+            io->device = device;
+            io->direction = direction;
+            io->isAlarm = isAlarm;
+            io->alarmText = alarmText;
+            io->invertLogic = invertLogic;
+        }
+
+    }
+    settings.endArray();
+
+    // lettura IO analogici
+    size = settings.beginReadArray(ANALOGIC_ARRAY_NAME);
+    for (auto&& i=0; i<size; ++i) {
+        settings.setArrayIndex(i);
+        auto name = settings.value(ANALOGIC_PARAMETER_NAME).value<QString>();
+
+        if (const auto& io = dynamic_pointer_cast<AnalogicIOFloat>(ios.value(name))) {
+            using type = isAnalogicIO<AnalogicIOFloat>::type;
+            auto channel = settings.value(ANALOGIC_PARAMETER_CHANNEL).value<unsigned int>();
+            auto device = str2DeviceType(settings.value(ANALOGIC_PARAMETER_DEVICE).value<QString>());
+            auto direction = str2DirectionType(settings.value(ANALOGIC_PARAMETER_DIRECTION).value<QString>());
+            auto isAlarm = settings.value(ANALOGIC_PARAMETER_ISALARM).value<bool>();
+            auto alarmText = settings.value(ANALOGIC_PARAMETER_ALARMTEXT).value<QString>();
+            auto hysteresis = settings.value(ANALOGIC_PARAMETER_HYSTERESIS).value<type>();
+            auto lowerLimit = settings.value(ANALOGIC_PARAMETER_LOWERLIMIT).value<type>();
+            auto upperLimit = settings.value(ANALOGIC_PARAMETER_UPPERLIMIT).value<type>();
+            auto gain = settings.value(ANALOGIC_PARAMETER_GAIN).value<type>();
+            auto offset = settings.value(ANALOGIC_PARAMETER_OFFSET).value<type>();
+            auto measureUnit = settings.value(ANALOGIC_PARAMETER_MEASUREUNIT).value<QString>();
+
+            io->channel = channel;
+            io->device = device;
+            io->direction = direction;
+            io->isAlarm = isAlarm;
+            io->alarmText = alarmText;
+            io->hysteresis = hysteresis;
+            io->lowerLimit = lowerLimit;
+            io->upperLimit = upperLimit;
+            io->gain = gain;
+            io->offset = offset;
+            io->measureUnit = measureUnit;
+
+        } else if (const auto& io = dynamic_pointer_cast<AnalogicIODouble>(ios.value(name))) {
+            using type = isAnalogicIO<AnalogicIODouble>::type;
+            auto channel = settings.value(ANALOGIC_PARAMETER_CHANNEL).value<unsigned int>();
+            auto device = str2DeviceType(settings.value(ANALOGIC_PARAMETER_DEVICE).value<QString>());
+            auto direction = str2DirectionType(settings.value(ANALOGIC_PARAMETER_DIRECTION).value<QString>());
+            auto isAlarm = settings.value(ANALOGIC_PARAMETER_ISALARM).value<bool>();
+            auto alarmText = settings.value(ANALOGIC_PARAMETER_ALARMTEXT).value<QString>();
+            auto hysteresis = settings.value(ANALOGIC_PARAMETER_HYSTERESIS).value<type>();
+            auto lowerLimit = settings.value(ANALOGIC_PARAMETER_LOWERLIMIT).value<type>();
+            auto upperLimit = settings.value(ANALOGIC_PARAMETER_UPPERLIMIT).value<type>();
+            auto gain = settings.value(ANALOGIC_PARAMETER_GAIN).value<type>();
+            auto offset = settings.value(ANALOGIC_PARAMETER_OFFSET).value<type>();
+            auto measureUnit = settings.value(ANALOGIC_PARAMETER_MEASUREUNIT).value<QString>();
+
+            io->channel = channel;
+            io->device = device;
+            io->direction = direction;
+            io->isAlarm = isAlarm;
+            io->alarmText = alarmText;
+            io->hysteresis = hysteresis;
+            io->lowerLimit = lowerLimit;
+            io->upperLimit = upperLimit;
+            io->gain = gain;
+            io->offset = offset;
+            io->measureUnit = measureUnit;
+        }
+    }
+    settings.endArray();
+
 }
 
 void ParametersManager::flush() const {
 
+    using namespace std;
+
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, life::ORGANIZATION, life::APPLICATION_NAME);
 
+    // scrittura parametri
     for (const QString& key: parameters.keys())
         settings.setValue(key, parameters.value(key));
+
+
+    // scrittura IO digitali
+    settings.beginWriteArray(DIGITAL_ARRAY_NAME);
+    int dCount = 0;
+    for (auto&& value: ios.values())
+        if (const auto& io = dynamic_pointer_cast<DigitalIO>(value)) {
+            settings.setArrayIndex(dCount++);
+            settings.setValue(DIGITAL_PARAMETER_NAME, io->name);
+            settings.setValue(DIGITAL_PARAMETER_CHANNEL, io->channel);
+            settings.setValue(DIGITAL_PARAMETER_DEVICE, deviceType2Str(io->device));
+            settings.setValue(DIGITAL_PARAMETER_DIRECTION, directionType2Str(io->direction));
+            settings.setValue(DIGITAL_PARAMETER_ISALARM, io->isAlarm);
+            settings.setValue(DIGITAL_PARAMETER_ALARMTEXT, io->alarmText);
+            settings.setValue(DIGITAL_PARAMETER_INVERTLOGIC, io->invertLogic);
+        }
+    settings.endArray();
+
+
+    // scrittura IO analogici
+    int aCount = 0;
+    settings.beginWriteArray(ANALOGIC_ARRAY_NAME);
+    for (auto&& value: ios.values()) {
+
+        if (const auto& io = dynamic_pointer_cast<AnalogicIOFloat>(value)) {
+            settings.setArrayIndex(aCount++);
+            settings.setValue(ANALOGIC_PARAMETER_NAME, io->name);
+            settings.setValue(ANALOGIC_PARAMETER_CHANNEL, io->channel);
+            settings.setValue(ANALOGIC_PARAMETER_DEVICE, io->device);
+            settings.setValue(ANALOGIC_PARAMETER_DIRECTION, io->direction);
+            settings.setValue(ANALOGIC_PARAMETER_ISALARM, io->isAlarm);
+            settings.setValue(ANALOGIC_PARAMETER_ALARMTEXT, io->alarmText);
+            settings.setValue(ANALOGIC_PARAMETER_HYSTERESIS, (double) io->hysteresis);
+            settings.setValue(ANALOGIC_PARAMETER_LOWERLIMIT, (double) io->lowerLimit);
+            settings.setValue(ANALOGIC_PARAMETER_UPPERLIMIT, (double) io->upperLimit);
+            settings.setValue(ANALOGIC_PARAMETER_GAIN, (double) io->gain);
+            settings.setValue(ANALOGIC_PARAMETER_OFFSET, (double) io->offset);
+            settings.setValue(ANALOGIC_PARAMETER_MEASUREUNIT, io->measureUnit);
+
+        } else if (const auto& io = dynamic_pointer_cast<AnalogicIODouble>(value)) {
+                settings.setArrayIndex(aCount++);
+                settings.setValue(ANALOGIC_PARAMETER_NAME, io->name);
+                settings.setValue(ANALOGIC_PARAMETER_CHANNEL, io->channel);
+                settings.setValue(ANALOGIC_PARAMETER_DEVICE, io->device);
+                settings.setValue(ANALOGIC_PARAMETER_DIRECTION, io->direction);
+                settings.setValue(ANALOGIC_PARAMETER_ISALARM, io->isAlarm);
+                settings.setValue(ANALOGIC_PARAMETER_ALARMTEXT, io->alarmText);
+                settings.setValue(ANALOGIC_PARAMETER_HYSTERESIS, io->hysteresis);
+                settings.setValue(ANALOGIC_PARAMETER_LOWERLIMIT, io->lowerLimit);
+                settings.setValue(ANALOGIC_PARAMETER_UPPERLIMIT, io->upperLimit);
+                settings.setValue(ANALOGIC_PARAMETER_GAIN, io->gain);
+                settings.setValue(ANALOGIC_PARAMETER_OFFSET, io->offset);
+                settings.setValue(ANALOGIC_PARAMETER_MEASUREUNIT, io->measureUnit);
+        }
+    }
+
+    settings.endArray();
 
 }

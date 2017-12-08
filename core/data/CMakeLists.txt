@@ -4,7 +4,7 @@ SET(ITEMS
     "LaserDutyProfile"
     "Profile"
     "Cylinder"
-    "CommonIO"
+    "SimpleIO"
     "AnalogicIO"
     "DigitalIO"
     "Parameters"
