@@ -45,7 +45,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="LineEditDoubleValidated" name="length"/>
+        <widget class="DoubleLineEdit" name="length"/>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="labelCircumference">
@@ -58,7 +58,7 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="LineEditIntValidated" name="circumference"/>
+        <widget class="IntLineEdit" name="circumference"/>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="labelDiameter">
@@ -152,14 +152,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>LineEditIntValidated</class>
+   <class>IntLineEdit</class>
    <extends>QLineEdit</extends>
-   <header>widgets/LineEditValidated.hpp</header>
+   <header>widgets/IntLineEdit.hpp</header>
   </customwidget>
   <customwidget>
-   <class>LineEditDoubleValidated</class>
+   <class>DoubleLineEdit</class>
    <extends>QLineEdit</extends>
-   <header>widgets/LineEditValidated.hpp</header>
+   <header>widgets/DoubleLineEdit.hpp</header>
   </customwidget>
  </customwidgets>
  <resources/>

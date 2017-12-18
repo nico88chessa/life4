@@ -1,5 +1,6 @@
 SET(ITEMS
-    "LineEditValidated"
+    "IntLineEdit"
+    "DoubleLineEdit"
     "UnmovableDialog"
     "UnmovableMainWindow"
     )

@@ -67,9 +67,17 @@ public:
         return std::make_shared<T>();
     }
 
-    const QMap<QString, std::shared_ptr<SimpleIO> >& getIOs() const { return ios; }
+    template <typename T>
+    void setIO(const QString& name, const T& value) {
+        if (ios.contains(name))
+            ios.remove(name);
 
-    int size() const { return parameters.size(); }
+        static_assert(isDigitalIO<T>::value || isAnalogicIO<T>::value, "IO type must be DigitalIO or AnalogicIO.");
+
+        ios.insert(name, std::make_shared<T>(value));
+    }
+
+    const QMap<QString, std::shared_ptr<SimpleIO> >& getIOs() const { return ios; }
 
     void load();
 

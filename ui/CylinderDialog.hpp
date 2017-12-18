@@ -1,7 +1,6 @@
 #ifndef CYLINDERDIALOG_HPP
 #define CYLINDERDIALOG_HPP
 
-#include <widgets/LineEditValidated.hpp>
 #include <widgets/UnmovableDialog.hpp>
 
 namespace Ui {

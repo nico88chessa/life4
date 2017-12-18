@@ -11,8 +11,18 @@
 #include <widgets/UnmovableMainWindow.hpp>
 #include <CylinderDialog.hpp>
 #include <core/data/DigitalIO.hpp>
+#include <iostream>
 #include <memory>
 #include <ui/SettingsPage.hpp>
+#include <core/logic/ParametersManager.hpp>
+#include <QtGlobal>
+#include <QtCore>
+#include <QTranslator>
+#include <QApplication>
+#include <QMainWindow>
+#include <core/data/AnalogicIO.hpp>
+
+//DECL_STANDARD_ANALOGIC_IO_DOUBLE(MirrorTemperature2, 1, PLC, INPUT, true, "Mirror temperature too high!", 1.0, 20.0, 40.0, 1.0, 0.0, °C)
 
 template <typename T>
 class A {
@@ -37,7 +47,50 @@ template <quint32> struct valueIsOF { using type = void; };
 template <> struct valueIsOF<1> { using type = QString; };
 template <> struct valueIsOF<2> { using type = char; };
 
+using namespace life;
+
+
 int main(int argc, char** argv) {
+
+/********************* PER TRADUZIONI *********************************
+
+    QApplication application(argc, argv);
+    QTranslator translator;
+
+    translator.load("LIFE_IT.qm");
+    application.installTranslator(&translator);
+
+    QString prova = application.translate("Header", AnalogicMirrorTemperature.alarmText.toLatin1());
+    //KO --> Context translation errato QString prova2 = application.tr(AnalogicMirrorTemperature.alarmText.toLatin1());
+    //KO --> Context translation errato QString prova3 = application.tr(AnalogicMirrorTemperature.alarmText.toLatin1(), "Header");
+    //KO --> Context translation errato QString prova4 = application.tr("Header", AnalogicMirrorTemperature.alarmText.toLatin1());
+
+**********************************************************************/
+
+
+/*****************************************************
+
+    std::vector<std::shared_ptr<life::SimpleIO> > vet;
+
+    auto prova1 = std::make_shared<life::AnalogicIOFloat>(life::AnalogicMirrorTemperature);
+
+    vet.push_back(prova1);
+
+    auto testVar = vet.at(0);
+    if (auto testVar2 = std::dynamic_pointer_cast<life::AnalogicIODouble>(testVar))
+        qDebug() << "OK";
+
+    if (auto testVar3 = std::dynamic_pointer_cast<life::AnalogicIOFloat>(testVar))
+        qDebug() << "NOK";
+
+    qDebug() << life::ANALOGIC_PARAMETER_NAME;
+    QString test2 = life::ANALOGIC_PARAMETER_NAME;
+*****************************************************/
+
+
+    qDebug() << "size: " << life::machineparameters::AxisXFeedbackStr[static_cast<int>(life::machineparameters::AxisXFeedback::linear)];
+    qDebug() << "size: " << life::machineparameters::AxisXFeedbackSize;
+    qDebug() << "size: " << life::machineparameters::AxisXKindSize;
 
     QApplication app(argc, argv);
 
@@ -74,18 +127,17 @@ int main(int argc, char** argv) {
 
 *****************************************************/
 
-//    life::MachineParameters mp;
-//    mp.flush();
+/*****************************************************
+    life::ParametersManager mp;
 
-//    auto value = mp.getValue(life::machineparameters::AXISX_ACC);
+    auto t = mp.getIO<decltype(AnalogicMirrorTemperature)>("AnalogicMirrorTemperatu");
+    qDebug() << "count: " << t.use_count();
+    qDebug() << "lowerLimit: " << t->lowerLimit;
+    mp.flush();
 
-//    valueIsOF<1>::type vTest1 = "true";
-//    valueIsOF<2>::type vTest2 = 2;
-//    valueIsOF<3>::type* vTest3 = nullptr;
+    auto value = mp.getValue(life::machineparameters::AXISX_ACC);
 
-//    life::MachineDigitalIO mdi;
-//    mdi.flush();
+    return 0;
+*****************************************************/
 
-//    return 0;
 }
-

@@ -9,6 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->hideMenuButton, &QPushButton::clicked, this, &MainWindow::hideMenu);
 
+    QFile file(":/styles/style1.qss");
+    if (!file.open(QFile::ReadOnly))
+        return;
+    QString styleSheet = QLatin1String(file.readAll());
+    this->setStyleSheet(styleSheet);
+
 }
 
 MainWindow::~MainWindow() {
