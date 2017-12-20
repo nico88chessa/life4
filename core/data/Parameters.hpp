@@ -18,7 +18,6 @@ namespace machineparameters {
 DECL_ENUMS(AxisXFeedback, ENUM_AXISX_FEEDBACK)
 
 
-
 #define ENUM_AXISX_KIND(ITEM) \
     ITEM(linear), \
     ITEM(normal)
@@ -31,50 +30,16 @@ DECL_ENUMS(AxisXKind, ENUM_AXISX_KIND)
 DECL_ENUMS(GuiUnitMeasure, ENUM_GUI_UNIT_MEASURE)
 
 
-//#define DECL_AXISX_FEEDBACK_LIST(ITEM) \
-//    ITEM(linear), \
-//    ITEM(brushless)
-//
-//#define DECL_AXISX_FEEDBACK_ENUM_VALUE(ITEM) ITEM
-//#define DECL_AXISX_FEEDBACK_ENUM_STR(ITEM) #ITEM
-//enum struct AxisXFeedback { DECL_AXISX_FEEDBACK_LIST(DECL_AXISX_FEEDBACK_ENUM_VALUE) };
-//static const char* AxisXFeedbackStr[] = { DECL_AXISX_FEEDBACK_LIST(DECL_AXISX_FEEDBACK_ENUM_STR) };
-//constexpr const int AxisXFeedbackSize = std::extent<decltype(AxisXFeedbackStr)>::value;
-//
-//
-//#define DECL_AXISX_KIND_LIST(ITEM) \
-//    ITEM(linear), \
-//    ITEM(normal)
-//
-//#define DECL_AXISX_KIND_ENUM_VALUE(ITEM) ITEM
-//#define DECL_AXISX_KIND_ENUM_STR(ITEM) #ITEM
-//enum struct AxisXKind { DECL_AXISX_KIND_LIST(DECL_AXISX_KIND_ENUM_VALUE) };
-//static const char* AxisXKindStr[] = { DECL_AXISX_KIND_LIST(DECL_AXISX_KIND_ENUM_STR) };
-//constexpr const int AxisXKindSize = std::extent<decltype(AxisXKindStr)>::value;
-//
-//
-//#define DECL_GUI_UNIT_MEASURE_PARAMETER_LIST(ITEM) \
-//    ITEM(mm), \
-//    ITEM(dpi)
-//
-//#define DECL_GUI_UNIT_MEASURE_VALUE(ITEM) ITEM
-//#define DECL_GUI_UNIT_MEASURE_STR(ITEM) #ITEM
-//enum struct GuiUnitMeasure { DECL_GUI_UNIT_MEASURE_PARAMETER_LIST(DECL_GUI_UNIT_MEASURE_VALUE) };
-//static const char* GuiUnitMeasureStr[] = { DECL_GUI_UNIT_MEASURE_PARAMETER_LIST(DECL_GUI_UNIT_MEASURE_STR) };
-//constexpr const int GuiUnitMeasureSize = std::extent<decltype(GuiUnitMeasureStr)>::value;
-
-
 enum struct MachineParameterOption {
     IP_ADDRESS
 };
 
 
-
-template <typename T, int OPTION_SIZE = 0 >
+template <typename T>
 struct MachineParameter {
     const QString key;
     const T defaultValue;
-    const std::array<MachineParameterOption, OPTION_SIZE> options;
+    const std::initializer_list<MachineParameterOption> options;
     const QString unitMeasure;
 };
 
@@ -85,20 +50,19 @@ struct isMachineParameter {
     using type = void;
 };
 
-template <typename T, int OPTION_SIZE>
-struct isMachineParameter<MachineParameter<T, OPTION_SIZE> > {
+template <typename T>
+struct isMachineParameter<MachineParameter<T> > {
     static const bool value = true;
-    static const int optionSize = OPTION_SIZE;
     using type = T;
 };
 
 #define MACHINE_PARAMETER_TYPE(mp) std::remove_const<decltype(mp.defaultValue)>::type
 
-#define DECL_MACHINE_PARAMETER(NAME, TYPE, OPTION_SIZE, KEY, DFLT_VALUE, OPTIONS, UNIT_MEASURE) \
-    static const MachineParameter<TYPE, OPTION_SIZE> NAME = { KEY, DFLT_VALUE, OPTIONS, UNIT_MEASURE}; \
+#define DECL_MACHINE_PARAMETER(NAME, TYPE, KEY, DFLT_VALUE, OPTIONS, UNIT_MEASURE) \
+    static const MachineParameter<TYPE> NAME = { KEY, DFLT_VALUE, {OPTIONS}, UNIT_MEASURE}; \
 
 #define DECL_MACHINE_PARAMETER_NOOPTIONS(NAME, TYPE, KEY, DFLT_VALUE, UNIT_MEASURE) \
-    DECL_MACHINE_PARAMETER(NAME, TYPE, 0, KEY, DFLT_VALUE, {}, UNIT_MEASURE)
+    DECL_MACHINE_PARAMETER(NAME, TYPE, KEY, DFLT_VALUE, , UNIT_MEASURE)
 
 
 DECL_MACHINE_PARAMETER_NOOPTIONS(MACHINE_ETH_INTERFACE_LAN, QString, "Machine/EthInterfaceLan", "eth0", "")
@@ -106,7 +70,7 @@ DECL_MACHINE_PARAMETER_NOOPTIONS(MACHINE_ETH_INTERFACE_DEVICES, QString, "Machin
 DECL_MACHINE_PARAMETER_NOOPTIONS(GUI_LANGUAGE, QString, "GUI/Language", "IT", "")
 DECL_MACHINE_PARAMETER_NOOPTIONS(GUI_UNIT_MEASURE, GuiUnitMeasure, "GUI/UnitMeasure", GuiUnitMeasure::mm, "")
 DECL_MACHINE_PARAMETER_NOOPTIONS(GUI_SPLASH_ENABLE,  bool, "GUI/SplashEnable", true, "")
-DECL_MACHINE_PARAMETER(CN_IP, QString, 1, "CN/IP", 0, MachineParameterOption::IP_ADDRESS, "")
+DECL_MACHINE_PARAMETER(CN_IP, QString, "CN/IP", 0, MachineParameterOption::IP_ADDRESS, "")
 
 DECL_MACHINE_PARAMETER_NOOPTIONS(AXISX_STEPPERUNIT, quint32, "AxisX/StepPerUnit", 1000, "i/mm")
 DECL_MACHINE_PARAMETER_NOOPTIONS(AXISX_ZEROACC, quint32, "AxisX/ZeroAcc", 100, "i/mm")

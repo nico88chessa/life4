@@ -1,8 +1,8 @@
 #ifndef UTILITY_HPP
 #define UTILITY_HPP
 
-#include <string>
 #include <type_traits>
+#include <QString>
 
 template <typename T> struct isFloat { static constexpr bool value = false; };
 template <> struct isFloat<float> { static constexpr bool value = true; };
@@ -19,15 +19,15 @@ template <> struct isDouble<double> { static constexpr bool value = true; };
     enum struct TYPE : int { LIST(DECL_ENUM_VALUE) };
 
 #define DECL_ENUM_TYPE_STR(TYPE, LIST) \
-    static const char* TYPE##Str[] = { LIST(DECL_ENUM_VALUE_STR) };
+    static const QString TYPE##Str[] = { LIST(DECL_ENUM_VALUE_STR) };
 
 #define DECL_ENUM_TYPE_SIZE(TYPE) \
     static constexpr int TYPE##Size = std::extent<decltype(TYPE##Str)>::value;
 
 #define DECL_ENUM_TYPE_FROM_STR(TYPE)                           \
-    static inline int TYPE##FromString(const char* str) {       \
+    static inline int TYPE##FromString(const QString& str) {    \
         for (int i=0; i<TYPE##Size; i++)                        \
-            if (std::string(TYPE##Str[i]).compare(str) == 0)    \
+            if (TYPE##Str[i].compare(str) == 0)                 \
                 return i;                                       \
         return -1;                                              \
     }

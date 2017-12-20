@@ -32,6 +32,7 @@ public:
 
 private:
     life::ParametersManager parameterManager;
+    QMap<QString, QVariant> parameters;
 
 private slots:
     void removeAllWidgets();
@@ -42,14 +43,13 @@ private:
     Ui::SettingsPage *ui;
 
     template<typename T>
-    QLayout* widgetParameter(const T& machineParameter) {
+    QLayout* widgetFactory(const T& machineParameter) {
 
         using namespace life::machineparameters;
 
         static_assert(isMachineParameter<T>::value, "T must be a machine parameter");
         using type = typename isMachineParameter<T>::type;
-        constexpr auto options = isMachineParameter<T>::optionSize;
-        auto& mp = static_cast<const MachineParameter<type, options>&>(machineParameter);
+        auto& mp = static_cast<const MachineParameter<type>&>(machineParameter);
 
         QHBoxLayout* hLayout = new QHBoxLayout();
         auto label = new QLabel(mp.key, this);
@@ -63,12 +63,16 @@ private:
                     widget->setInputMask("000.000.000.000");
             widget->setObjectName(mp.key);
             hLayout->addWidget(widget);
-            connect(widget, &QLineEdit::editingFinished, this, &SettingsPage::updateSetting);
+            connect(widget, &QLineEdit::textEdited, [=](const QString& text) {
+                parameters[mp.key] = text;
+            });
 
         } else if (std::is_same<bool, type>::value) {
             auto widget = new QCheckBox(this);
             widget->setObjectName(mp.key);
-            connect(widget, &QCheckBox::clicked, this, &SettingsPage::updateSetting);
+            connect(widget, &QCheckBox::stateChanged, [=](int state) {
+                parameters[mp.key] = (state == Qt::CheckState::Checked) ? true : false;
+            });
             hLayout->addWidget(widget);
 
         } else if (std::is_integral<type>::value) {
@@ -76,7 +80,9 @@ private:
             widget->setObjectName(mp.key);
             widget->setSuffix(" "+mp.unitMeasure);
             widget->setRange(0, std::numeric_limits<int>::max());
-            connect(widget, &QSpinBox::editingFinished, this, &SettingsPage::updateSetting);
+            connect(widget, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](int value) {
+                parameters[mp.key] = value;
+            });
             hLayout->addWidget(widget);
 
         } else if (std::is_enum<type>::value) {
@@ -85,13 +91,29 @@ private:
             if (std::is_same<type, AxisXFeedback>::value) {
                 for (auto item: AxisXFeedbackStr)
                     widget->addItem(item);
+
+                connect(widget, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index) {
+                    parameters[mp.key] = life::machineparameters::AxisXFeedbackStr[index];
+                });
+
             } else if (std::is_same<type, AxisXKind>::value) {
                 for (auto item: AxisXKindStr)
                     widget->addItem(item);
+
+                connect(widget, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index) {
+                    parameters[mp.key] = life::machineparameters::AxisXKindStr[index];
+                });
+
             } else if (std::is_same<type, GuiUnitMeasure>::value) {
                 for (auto item: GuiUnitMeasureStr)
                     widget->addItem(item);
+
+                connect(widget, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index) {
+                    parameters[mp.key] = life::machineparameters::GuiUnitMeasureStr[index];
+                });
+
             }
+
             hLayout->addWidget(widget);
         }
 
