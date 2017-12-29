@@ -61,7 +61,7 @@ public:
     template <typename T>
     std::shared_ptr<const T> getIO(const QString& name) const {
         if (ios.contains(name))
-            if (auto&& value = std::dynamic_pointer_cast<T>(ios.value(name)))
+            if (auto&& value = std::const_pointer_cast<T>(ios.value(name)))
                 return value;
 
         return std::make_shared<T>();
@@ -77,7 +77,13 @@ public:
         ios.insert(name, std::make_shared<T>(value));
     }
 
-    const QMap<QString, std::shared_ptr<SimpleIO> >& getIOs() const { return ios; }
+    const QMap<QString, std::shared_ptr<const SimpleIO> > getIOs() const {
+        QMap<QString, std::shared_ptr<const SimpleIO> > newMap;
+        for (auto&& key: ios.keys())
+            newMap[key] = std::const_pointer_cast<SimpleIO>(ios[key]);
+
+        return newMap;
+    }
 
     void load();
 

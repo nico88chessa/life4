@@ -26,13 +26,15 @@ class SettingsPage : public QFrame
 {
     Q_OBJECT
 
+private:
+    life::ParametersManager parameterManager;
+    QMap<QString, QVariant> parameters;
+    Ui::SettingsPage *ui;
+
 public:
     explicit SettingsPage(QWidget *parent = 0);
     ~SettingsPage();
 
-private:
-    life::ParametersManager parameterManager;
-    QMap<QString, QVariant> parameters;
 
 private slots:
     void removeAllWidgets();
@@ -40,8 +42,6 @@ private slots:
     void updateSetting();
 
 private:
-    Ui::SettingsPage *ui;
-
     template<typename T>
     QLayout* widgetFactory(const T& machineParameter) {
 

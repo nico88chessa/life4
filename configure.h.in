@@ -6,6 +6,8 @@ namespace life {
 static constexpr char APPLICATION_NAME[] = "@CMAKE_PROJECT_NAME@";
 static constexpr char LIFE_VERSION[] = "@LIFE_VERSION@";
 static constexpr char ORGANIZATION[] = "@ORGANIZATION@";
+static constexpr char BIN_PATH[] = "@PROJECT_BINARY_DIR@";
+static constexpr char PROJECT_QSS_PATH[] = "@PROJECT_QSS_PATH@";
 
 }
 

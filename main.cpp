@@ -94,6 +94,8 @@ int main(int argc, char** argv) {
 
     QApplication app(argc, argv);
 
+    qDebug() << "linear: " << life::machineparameters::AxisXFeedbackFromString("brushless");
+
     MainWindow test;
     test.show();
 

@@ -19,8 +19,8 @@ static constexpr char DIGITAL_PARAMETER_INVERTLOGIC[] = "InvertLogic";
 
 
 struct DigitalIO : public SimpleIO {
-    DigitalIO() { }
-    DigitalIO(const QString& n, unsigned int c, device_type d, direction_type dt, bool ia, const QString& at, bool il)
+    DigitalIO() : DigitalIO("", -1, DeviceKind::CN, DirectionType::Input, false, "", false) { }
+    DigitalIO(const QString& n, int c, DeviceKind d, DirectionType dt, bool ia, const QString& at, bool il)
         : SimpleIO(n, c, d, dt, ia, at),
           invertLogic(il) { }
 
@@ -43,12 +43,12 @@ struct isDigitalIO<DigitalIO> {
 #define DECL_STANDARD_DIGITAL_IO(NAME, CHANNEL, DEVICE, DIRECTION, IS_ALARM, ALARM_TEXT, INVERT_LOGIC) \
     static const DigitalIO Digital##NAME = { #NAME, CHANNEL, DEVICE, DIRECTION, IS_ALARM, #ALARM_TEXT, INVERT_LOGIC };
 
-DECL_STANDARD_DIGITAL_IO(Power, 0, CN, INPUT, false, , false)
-DECL_STANDARD_DIGITAL_IO(Cycle, 1, CN, INPUT, false, , false)
-DECL_STANDARD_DIGITAL_IO(Enable, 2, PLC, OUTPUT, false, , false)
-DECL_STANDARD_DIGITAL_IO(LaserPower, 3, PLC, OUTPUT, false, , false)
-DECL_STANDARD_DIGITAL_IO(GreenLamp, 4, PLC, OUTPUT, false, , false)
-DECL_STANDARD_DIGITAL_IO(RedLamp, 5, PLC, OUTPUT, false, , false)
+DECL_STANDARD_DIGITAL_IO(Power, 0, DeviceKind::CN, DirectionType::Input, false, , false)
+DECL_STANDARD_DIGITAL_IO(Cycle, 1, DeviceKind::CN, DirectionType::Input, false, , false)
+DECL_STANDARD_DIGITAL_IO(Enable, 2, DeviceKind::PLC, DirectionType::Output, false, , false)
+DECL_STANDARD_DIGITAL_IO(LaserPower, 3, DeviceKind::PLC, DirectionType::Output, false, , false)
+DECL_STANDARD_DIGITAL_IO(GreenLamp, 4, DeviceKind::PLC, DirectionType::Output, false, , false)
+DECL_STANDARD_DIGITAL_IO(RedLamp, 5, DeviceKind::PLC, DirectionType::Output, false, , false)
 
 
 

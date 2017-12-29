@@ -2,6 +2,7 @@
 #define MAINWINDOW_HPP
 
 #include <widgets/UnmovableMainWindow.hpp>
+#include <configure.h>
 #include <QFile>
 
 namespace Ui {
@@ -17,9 +18,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QAction* updateStyleSheetAction;
 
 private slots:
     void hideMenu();
+    void updateStyleSheet();
+
+private:
+    void buildMenuBar();
 
 };
 

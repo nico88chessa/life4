@@ -1,4 +1,4 @@
-QMainWindow {
+/*QMainWindow {
     background-color: rgb(239, 239, 239);
 }
 
@@ -11,17 +11,17 @@ QFrame {
 QLineEdit {
     border: 10px;
 /*    padding: 10px;*/
-}
+/*}
 
 QPushButton {
     border: 0px;
 /*    padding: 10px;*/
-}
-
+/*}
+*/
 IntLineEdit[valid="false"] {
     color: rgb(255, 0 ,0);
 }
-
+/*
 DoubleLineEdit[valid="false"] {
     color: rgb(255, 0 ,0);
 }
@@ -35,4 +35,16 @@ SettingsPage QLabel {
 
 SettingsPage #scrollAreaWidgetContents {
     background-color: transparent;
+}
+*/
+DigitalIOPage #IOList {
+    min-width: 300px;
+    max-width: 300px;
+}
+
+
+DigitalIOPage #IODetails QLabel {
+    min-height: 30px;
+    min-width: 200px;
+    max-width: 200px;
 }

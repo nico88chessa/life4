@@ -7,6 +7,10 @@ ParametersManager::ParametersManager() {
     load();
 }
 
+/**
+ * @brief ParametersManager::load
+ * questo metodo carica i parametri dal file di configurazione
+ */
 void ParametersManager::load() {
 
     using namespace std;
@@ -18,7 +22,6 @@ void ParametersManager::load() {
     parameters.insert(MACHINE_ETH_INTERFACE_DEVICES.key, settings.value(MACHINE_ETH_INTERFACE_DEVICES.key, MACHINE_ETH_INTERFACE_DEVICES.defaultValue).value<MACHINE_PARAMETER_TYPE(MACHINE_ETH_INTERFACE_DEVICES)>());
     parameters.insert(GUI_LANGUAGE.key, settings.value(GUI_LANGUAGE.key, GUI_LANGUAGE.defaultValue).value<MACHINE_PARAMETER_TYPE(GUI_LANGUAGE)>());
     parameters.insert(GUI_UNIT_MEASURE.key, settings.value(GUI_UNIT_MEASURE.key, QVariant::fromValue(GUI_UNIT_MEASURE.defaultValue)));
-//    parameters.insert(GUI_UNIT_MEASURE.key, settings.value(GUI_UNIT_MEASURE.key, static_cast(GUI_UNIT_MEASURE.defaultValue)).value<(int)MACHINE_PARAMETER_TYPE(GUI_UNIT_MEASURE)>());
     parameters.insert(GUI_SPLASH_ENABLE.key, settings.value(GUI_SPLASH_ENABLE.key, GUI_SPLASH_ENABLE.defaultValue).value<MACHINE_PARAMETER_TYPE(GUI_SPLASH_ENABLE)>());
 
     parameters.insert(AXISX_STEPPERUNIT.key, settings.value(AXISX_STEPPERUNIT.key, AXISX_STEPPERUNIT.defaultValue).value<MACHINE_PARAMETER_TYPE(AXISX_STEPPERUNIT)>());
@@ -33,8 +36,6 @@ void ParametersManager::load() {
     parameters.insert(AXISX_BASEOFFSET.key, settings.value(AXISX_BASEOFFSET.key, AXISX_BASEOFFSET.defaultValue).value<MACHINE_PARAMETER_TYPE(AXISX_BASEOFFSET)>());
     parameters.insert(AXISX_FEEDBACK.key, settings.value(AXISX_FEEDBACK.key, QVariant::fromValue(AXISX_FEEDBACK.defaultValue)));
     parameters.insert(AXISX_KIND.key, settings.value(AXISX_KIND.key, QVariant::fromValue(AXISX_KIND.defaultValue)));
-//    parameters.insert(AXISX_FEEDBACK.key, settings.value(AXISX_FEEDBACK.key, AXISX_FEEDBACK.defaultValue).value<MACHINE_PARAMETER_TYPE(AXISX_FEEDBACK)>());
-//    parameters.insert(AXISX_KIND.key, settings.value(AXISX_KIND.key, AXISX_KIND.defaultValue).value<MACHINE_PARAMETER_TYPE(AXISX_KIND)>());
     parameters.insert(AXISX_SAFETYPOSITION.key, settings.value(AXISX_SAFETYPOSITION.key, AXISX_SAFETYPOSITION.defaultValue).value<MACHINE_PARAMETER_TYPE(AXISX_SAFETYPOSITION)>());
 
     parameters.insert(AXISZ_STEPPERUNIT.key, settings.value(AXISZ_STEPPERUNIT.key, AXISZ_STEPPERUNIT.defaultValue).value<MACHINE_PARAMETER_TYPE(AXISZ_STEPPERUNIT)>());
@@ -84,9 +85,9 @@ void ParametersManager::load() {
         auto name = settings.value(DIGITAL_PARAMETER_NAME).value<QString>();
 
         if (const auto& io = dynamic_pointer_cast<DigitalIO>(ios.value(name))) {
-            auto channel = settings.value(DIGITAL_PARAMETER_CHANNEL).value<unsigned int>();
-            auto device = str2DeviceType(settings.value(DIGITAL_PARAMETER_DEVICE).value<QString>());
-            auto direction = str2DirectionType(settings.value(DIGITAL_PARAMETER_DIRECTION).value<QString>());
+            auto channel = settings.value(DIGITAL_PARAMETER_CHANNEL).value<int>();
+            auto device = static_cast<DeviceKind>(DeviceKindFromString(settings.value(DIGITAL_PARAMETER_DEVICE).value<QString>()));
+            auto direction = static_cast<DirectionType>(DirectionTypeFromString(settings.value(DIGITAL_PARAMETER_DIRECTION).value<QString>()));
             auto isAlarm = settings.value(DIGITAL_PARAMETER_ISALARM).value<bool>();
             auto alarmText = settings.value(DIGITAL_PARAMETER_ALARMTEXT).value<QString>();
             auto invertLogic = settings.value(DIGITAL_PARAMETER_INVERTLOGIC).value<bool>();
@@ -110,9 +111,9 @@ void ParametersManager::load() {
 
         if (const auto& io = dynamic_pointer_cast<AnalogicIOFloat>(ios.value(name))) {
             using type = isAnalogicIO<AnalogicIOFloat>::type;
-            auto channel = settings.value(ANALOGIC_PARAMETER_CHANNEL).value<unsigned int>();
-            auto device = str2DeviceType(settings.value(ANALOGIC_PARAMETER_DEVICE).value<QString>());
-            auto direction = str2DirectionType(settings.value(ANALOGIC_PARAMETER_DIRECTION).value<QString>());
+            auto channel = settings.value(ANALOGIC_PARAMETER_CHANNEL).value<int>();
+            auto device = static_cast<DeviceKind>(DeviceKindFromString(settings.value(ANALOGIC_PARAMETER_DEVICE).value<QString>()));
+            auto direction = static_cast<DirectionType>(DirectionTypeFromString(settings.value(ANALOGIC_PARAMETER_DIRECTION).value<QString>()));
             auto isAlarm = settings.value(ANALOGIC_PARAMETER_ISALARM).value<bool>();
             auto alarmText = settings.value(ANALOGIC_PARAMETER_ALARMTEXT).value<QString>();
             auto hysteresis = settings.value(ANALOGIC_PARAMETER_HYSTERESIS).value<type>();
@@ -136,9 +137,9 @@ void ParametersManager::load() {
 
         } else if (const auto& io = dynamic_pointer_cast<AnalogicIODouble>(ios.value(name))) {
             using type = isAnalogicIO<AnalogicIODouble>::type;
-            auto channel = settings.value(ANALOGIC_PARAMETER_CHANNEL).value<unsigned int>();
-            auto device = str2DeviceType(settings.value(ANALOGIC_PARAMETER_DEVICE).value<QString>());
-            auto direction = str2DirectionType(settings.value(ANALOGIC_PARAMETER_DIRECTION).value<QString>());
+            auto channel = settings.value(ANALOGIC_PARAMETER_CHANNEL).value<int>();
+            auto device = static_cast<DeviceKind>(DeviceKindFromString(settings.value(ANALOGIC_PARAMETER_DEVICE).value<QString>()));
+            auto direction = static_cast<DirectionType>(DirectionTypeFromString(settings.value(ANALOGIC_PARAMETER_DIRECTION).value<QString>()));
             auto isAlarm = settings.value(ANALOGIC_PARAMETER_ISALARM).value<bool>();
             auto alarmText = settings.value(ANALOGIC_PARAMETER_ALARMTEXT).value<QString>();
             auto hysteresis = settings.value(ANALOGIC_PARAMETER_HYSTERESIS).value<type>();
@@ -165,6 +166,10 @@ void ParametersManager::load() {
 
 }
 
+/**
+ * @brief ParametersManager::flush
+ * questo metodo scrive gli attuali parametri nel file di configurazione di macchina
+ */
 void ParametersManager::flush() const {
 
     using namespace std;
@@ -184,8 +189,8 @@ void ParametersManager::flush() const {
             settings.setArrayIndex(dCount++);
             settings.setValue(DIGITAL_PARAMETER_NAME, io->name);
             settings.setValue(DIGITAL_PARAMETER_CHANNEL, io->channel);
-            settings.setValue(DIGITAL_PARAMETER_DEVICE, deviceType2Str(io->device));
-            settings.setValue(DIGITAL_PARAMETER_DIRECTION, directionType2Str(io->direction));
+            settings.setValue(DIGITAL_PARAMETER_DEVICE, DeviceKindStr[static_cast<int>(io->device)]);
+            settings.setValue(DIGITAL_PARAMETER_DIRECTION, DirectionTypeStr[static_cast<int>(io->direction)]);
             settings.setValue(DIGITAL_PARAMETER_ISALARM, io->isAlarm);
             settings.setValue(DIGITAL_PARAMETER_ALARMTEXT, io->alarmText);
             settings.setValue(DIGITAL_PARAMETER_INVERTLOGIC, io->invertLogic);
@@ -202,8 +207,8 @@ void ParametersManager::flush() const {
             settings.setArrayIndex(aCount++);
             settings.setValue(ANALOGIC_PARAMETER_NAME, io->name);
             settings.setValue(ANALOGIC_PARAMETER_CHANNEL, io->channel);
-            settings.setValue(ANALOGIC_PARAMETER_DEVICE, io->device);
-            settings.setValue(ANALOGIC_PARAMETER_DIRECTION, io->direction);
+            settings.setValue(ANALOGIC_PARAMETER_DEVICE, DeviceKindStr[static_cast<int>(io->device)]);
+            settings.setValue(ANALOGIC_PARAMETER_DIRECTION, DirectionTypeStr[static_cast<int>(io->direction)]);
             settings.setValue(ANALOGIC_PARAMETER_ISALARM, io->isAlarm);
             settings.setValue(ANALOGIC_PARAMETER_ALARMTEXT, io->alarmText);
             settings.setValue(ANALOGIC_PARAMETER_HYSTERESIS, (double) io->hysteresis);
@@ -217,8 +222,8 @@ void ParametersManager::flush() const {
                 settings.setArrayIndex(aCount++);
                 settings.setValue(ANALOGIC_PARAMETER_NAME, io->name);
                 settings.setValue(ANALOGIC_PARAMETER_CHANNEL, io->channel);
-                settings.setValue(ANALOGIC_PARAMETER_DEVICE, io->device);
-                settings.setValue(ANALOGIC_PARAMETER_DIRECTION, io->direction);
+                settings.setValue(ANALOGIC_PARAMETER_DEVICE, DeviceKindStr[static_cast<int>(io->device)]);
+                settings.setValue(ANALOGIC_PARAMETER_DIRECTION, DirectionTypeStr[static_cast<int>(io->direction)]);
                 settings.setValue(ANALOGIC_PARAMETER_ISALARM, io->isAlarm);
                 settings.setValue(ANALOGIC_PARAMETER_ALARMTEXT, io->alarmText);
                 settings.setValue(ANALOGIC_PARAMETER_HYSTERESIS, io->hysteresis);
@@ -233,3 +238,5 @@ void ParametersManager::flush() const {
     settings.endArray();
 
 }
+
+

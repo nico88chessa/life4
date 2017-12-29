@@ -15,6 +15,7 @@ SET(ITEMS
     "MainWindow"
     "CylinderDialog"
     "SettingsPage"
+    "DigitalIOPage"
     )
 
 FOREACH(ITEM ${ITEMS})

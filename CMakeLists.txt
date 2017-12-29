@@ -47,6 +47,7 @@ SET(PROJECT_RCC_FILES "" CACHE INTERNAL "rcc project files")
 SET(PROJECT_TS_FILES "" CACHE INTERNAL "ts project files")
 SET(PROJECT_QM_FILES "" CACHE INTERNAL "qm project files")
 SET(UPDATE_TS CACHE BOOL "") # questo lo setto qui cosi poi lo posso modificare da QtCreator
+SET(PROJECT_QSS_PATH "" CACHE INTERNAL "path of qss files") # questo serve per sviluppare il CSS a runtime senza usare il file .qrc (binario)
 
 SET(PROJECT_FOLDERS
     "${PROJECT_SOURCE_DIR}/core"

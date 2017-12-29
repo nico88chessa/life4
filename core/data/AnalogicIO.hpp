@@ -30,7 +30,7 @@ struct AnalogicIO : public SimpleIO {
     using type = T;
 
     AnalogicIO() { }
-    AnalogicIO(const QString& n, unsigned int c, device_type d, direction_type dt, bool ia, const QString& at,
+    AnalogicIO(const QString& n, int c, DeviceKind d, DirectionType dt, bool ia, const QString& at,
                type h, type ll, type ul, type g, type o, const QString& mu)
         : SimpleIO(n, c, d, dt, ia, at),
           hysteresis(h), lowerLimit(ll), upperLimit(ul), gain(g), offset(o), measureUnit(mu) { }
@@ -67,7 +67,7 @@ using AnalogicIODouble = AnalogicIO<double>;
 #define DECL_STANDARD_ANALOGIC_IO_FLOAT(...) DECL_STANDARD_ANALOGIC_IO(float, __VA_ARGS__)
 #define DECL_STANDARD_ANALOGIC_IO_DOUBLE(...) DECL_STANDARD_ANALOGIC_IO(double, __VA_ARGS__)
 
-DECL_STANDARD_ANALOGIC_IO_FLOAT(MirrorTemperature, 1, PLC, INPUT, true, QT_TRANSLATE_NOOP("Header", "Mirror temperature too high!"), 1.0, 20.0, 40.0, 1.0, 0.0, "°C")
+DECL_STANDARD_ANALOGIC_IO_FLOAT(MirrorTemperature, 1, DeviceKind::PLC, DirectionType::Input, true, QT_TRANSLATE_NOOP("Header", "Mirror temperature too high!"), 1.0, 20.0, 40.0, 1.0, 0.0, "°C")
 
 
 
