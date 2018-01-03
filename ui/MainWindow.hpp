@@ -5,9 +5,12 @@
 #include <configure.h>
 #include <QFile>
 
+
 namespace Ui {
 class MainWindow;
 }
+
+static constexpr const char UI_BUTTON_FRAME_PROPERTY[] = "hidden";
 
 class MainWindow : public life::UnmovableMainWindow {
     Q_OBJECT

@@ -71,29 +71,17 @@
           <height>100</height>
          </size>
         </property>
-        <property name="maximumSize">
-         <size>
-          <width>10</width>
-          <height>16777215</height>
-         </size>
-        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QTabWidget" name="tabWidget">
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <widget class="QWidget" name="tab">
-         <attribute name="title">
-          <string>Tab 1</string>
-         </attribute>
+       <widget class="QStackedWidget" name="stackedPages">
+        <widget class="QWidget" name="preferences">
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
-           <widget class="SettingsPage" name="frame">
+           <widget class="PreferencesPage" name="framePref">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -104,13 +92,24 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tab_2">
-         <attribute name="title">
-          <string>Tab 2</string>
-         </attribute>
+        <widget class="QWidget" name="manual">
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0">
-           <widget class="DigitalIOPage" name="frame_2">
+           <widget class="QFrame" name="frameMan">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="jobTickets">
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="QFrame" name="frameJob">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -140,15 +139,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SettingsPage</class>
+   <class>PreferencesPage</class>
    <extends>QFrame</extends>
-   <header>ui/SettingsPage.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>DigitalIOPage</class>
-   <extends>QFrame</extends>
-   <header>ui/DigitalIOPage.hpp</header>
+   <header>ui/PreferencesPage.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

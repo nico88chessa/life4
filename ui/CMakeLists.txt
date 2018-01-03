@@ -14,6 +14,7 @@ SET(ITEMS
     "resources"
     "MainWindow"
     "CylinderDialog"
+    "PreferencesPage"
     "SettingsPage"
     "DigitalIOPage"
     )

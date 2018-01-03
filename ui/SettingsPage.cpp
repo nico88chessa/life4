@@ -6,16 +6,40 @@ SettingsPage::SettingsPage(QWidget *parent) :
     ui(new Ui::SettingsPage) {
 
     ui->setupUi(this);
-
-    parameters = parameterManager.getParameters();
-
-    this->setupGraphics();
-
-    this->model2View();
 }
 
 SettingsPage::~SettingsPage() {
     delete ui;
+}
+
+void SettingsPage::init(const std::shared_ptr<life::ParametersManager> &parameterManager) {
+
+    this->parameterManager = parameterManager;
+    parameters = parameterManager->getParameters();
+
+    this->setupGraphics();
+
+    this->createConnections();
+
+    this->model2View();
+
+}
+
+void SettingsPage::reset() {
+
+    parameters = parameterManager->getParameters();
+
+    this->model2View();
+}
+
+bool SettingsPage::save() {
+
+    for (auto&& key: parameters.keys()) {
+        auto&& value = parameters.value(key);
+        parameterManager->setParameter(key, value);
+    }
+    return true;
+
 }
 
 void SettingsPage::removeAllWidgets() {
@@ -24,15 +48,6 @@ void SettingsPage::removeAllWidgets() {
         delete item;
     }
 
-}
-
-void SettingsPage::updateSetting() {
-
-    auto value = qobject_cast<QComboBox*>(sender());
-    if (value) {
-
-        qDebug() << this->sender();
-    }
 }
 
 void SettingsPage::setupGraphics() {
@@ -84,6 +99,10 @@ void SettingsPage::setupGraphics() {
     ui->verticalLayout->addLayout(widgetFactory(life::machineparameters::CYLINDER_MINSPEED));
     ui->verticalLayout->addLayout(widgetFactory(life::machineparameters::CYLINDER_MAXSPEED));
     ui->verticalLayout->addLayout(widgetFactory(life::machineparameters::CYLINDER_NUMOFENCODERS));
+
+}
+
+void SettingsPage::createConnections() {
 
 }
 

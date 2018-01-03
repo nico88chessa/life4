@@ -15,28 +15,37 @@ class DigitalIOPage : public QFrame
 {
     Q_OBJECT
 
+private:
+    Ui::DigitalIOPage *ui;
+
+    std::shared_ptr<life::ParametersManager> parameterManager;
+    QMap<QString, std::shared_ptr<life::DigitalIO> > digitalParameters;
+    life::DigitalIO digitalIOSelected;
+
 public:
     explicit DigitalIOPage(QWidget *parent = 0);
     ~DigitalIOPage();
 
-private:
-    Ui::DigitalIOPage *ui;
-    life::ParametersManager parameterManager;
-    QMap<QString, std::shared_ptr<life::DigitalIO> > digitalParameters;
+    void init(const std::shared_ptr<life::ParametersManager>& parameterManager);
 
-    life::DigitalIO digitalIOSelected;
+public slots:
+    void reset();
 
-private slots:
-    void IOItemListActivated(QListWidgetItem* item, QListWidgetItem *previous);
+    bool save();
 
 private:
-    void manageSignalsAndSlots();
-
     void setupGraphics();
+
+    void createConnections();
 
     void model2View();
 
     void blockIoDetailsSignals(bool value);
+
+    bool validate();
+
+private slots:
+    void IOItemListActivated(QListWidgetItem* item, QListWidgetItem *previous);
 
 };
 

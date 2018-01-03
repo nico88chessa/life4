@@ -1,7 +1,27 @@
+MainWindow #buttonFrame {
+    background-color: rgb(200, 0, 0);
+    min-width: 150px;
+    max-width: 150px;
+}
+
+MainWindow #buttonFrame[hidden="true"] {
+    min-width: 0px;
+    max-width: 0px;
+}
+
+MainWindow #hideMenuButton {
+    min-width: 20px;
+    max-width: 20px;
+    background-color: rgb(0, 200, 0);
+}
+
+MainWindow #stackedPages {
+    background-color: rgb(200, 200, 0);
+}
+
 /*QMainWindow {
     background-color: rgb(239, 239, 239);
 }
-
 
 QFrame {
     background-color: rgb(239, 245, 255);
@@ -37,6 +57,8 @@ SettingsPage #scrollAreaWidgetContents {
     background-color: transparent;
 }
 */
+
+
 DigitalIOPage #IOList {
     min-width: 300px;
     max-width: 300px;

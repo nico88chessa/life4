@@ -23,25 +23,12 @@ public:
 
 private:
     QMap<QString, QVariant> parameters; // parametri chiave, valore
-    QMap<QString, std::shared_ptr<SimpleIO> > ios; // parametri chiave, valore
+    QMap<QString, std::shared_ptr<SimpleIO> > ios; // parametri chiave, shared_ptr<valore>
 
 public:
     ParametersManager();
 
 public:
-
-//    template <typename T>
-//    T getParameter(const machineparameters::MachineParameter<T>& parameter) const {
-//        if (parameters.contains(parameter.key))
-//            return static_cast<QVariant>(parameters.value(parameter.key)).value<T>();
-//        return T();
-//    }
-
-//    template <typename T>
-//    void setParameter(const machineparameters::MachineParameter<T>& parameter, const T& value) {
-//        if (parameters.contains(parameter.key))
-//            parameters.insert(parameter.key, value);
-//    }
 
     template <typename T>
     T getParameter(const QString& name) const {

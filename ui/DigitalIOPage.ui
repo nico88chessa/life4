@@ -149,6 +149,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>IOList</tabstop>
+  <tabstop>name</tabstop>
+  <tabstop>enabled</tabstop>
+  <tabstop>channel</tabstop>
+  <tabstop>device</tabstop>
+  <tabstop>direction</tabstop>
+  <tabstop>invertLogic</tabstop>
+  <tabstop>isAlarm</tabstop>
+  <tabstop>alarmText</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -23,6 +23,7 @@ void ParametersManager::load() {
     parameters.insert(GUI_LANGUAGE.key, settings.value(GUI_LANGUAGE.key, GUI_LANGUAGE.defaultValue).value<MACHINE_PARAMETER_TYPE(GUI_LANGUAGE)>());
     parameters.insert(GUI_UNIT_MEASURE.key, settings.value(GUI_UNIT_MEASURE.key, QVariant::fromValue(GUI_UNIT_MEASURE.defaultValue)));
     parameters.insert(GUI_SPLASH_ENABLE.key, settings.value(GUI_SPLASH_ENABLE.key, GUI_SPLASH_ENABLE.defaultValue).value<MACHINE_PARAMETER_TYPE(GUI_SPLASH_ENABLE)>());
+    parameters.insert(CN_IP.key, settings.value(CN_IP.key, CN_IP.defaultValue).value<MACHINE_PARAMETER_TYPE(CN_IP)>());
 
     parameters.insert(AXISX_STEPPERUNIT.key, settings.value(AXISX_STEPPERUNIT.key, AXISX_STEPPERUNIT.defaultValue).value<MACHINE_PARAMETER_TYPE(AXISX_STEPPERUNIT)>());
     parameters.insert(AXISX_ZEROACC.key, settings.value(AXISX_ZEROACC.key, AXISX_ZEROACC.defaultValue).value<MACHINE_PARAMETER_TYPE(AXISX_ZEROACC)>());

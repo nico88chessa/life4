@@ -17,6 +17,7 @@
 #include <widgets/IntLineEdit.hpp>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
+#include <memory>
 
 namespace Ui {
 class SettingsPage;
@@ -27,19 +28,21 @@ class SettingsPage : public QFrame
     Q_OBJECT
 
 private:
-    life::ParametersManager parameterManager;
+    std::shared_ptr<life::ParametersManager> parameterManager;
     QMap<QString, QVariant> parameters;
     Ui::SettingsPage *ui;
 
 public:
     explicit SettingsPage(QWidget *parent = 0);
+
     ~SettingsPage();
 
+    void init(const std::shared_ptr<life::ParametersManager>& parameterManager);
 
-private slots:
-    void removeAllWidgets();
+public slots:
+    void reset();
 
-    void updateSetting();
+    bool save();
 
 private:
     template<typename T>
@@ -58,7 +61,7 @@ private:
 
         if (std::is_same<QString, type>::value) {
             auto widget = new QLineEdit(this);
-            for (auto value : mp.options)
+            for (auto&& value : mp.options)
                 if (value == MachineParameterOption::IP_ADDRESS)
                     widget->setInputMask("000.000.000.000");
             widget->setObjectName(mp.key);
@@ -89,7 +92,7 @@ private:
             auto widget = new QComboBox();
             widget->setObjectName(mp.key);
             if (std::is_same<type, AxisXFeedback>::value) {
-                for (auto item: AxisXFeedbackStr)
+                for (auto&& item: AxisXFeedbackStr)
                     widget->addItem(item);
 
                 connect(widget, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index) {
@@ -97,7 +100,7 @@ private:
                 });
 
             } else if (std::is_same<type, AxisXKind>::value) {
-                for (auto item: AxisXKindStr)
+                for (auto&& item: AxisXKindStr)
                     widget->addItem(item);
 
                 connect(widget, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index) {
@@ -105,7 +108,7 @@ private:
                 });
 
             } else if (std::is_same<type, GuiUnitMeasure>::value) {
-                for (auto item: GuiUnitMeasureStr)
+                for (auto&& item: GuiUnitMeasureStr)
                     widget->addItem(item);
 
                 connect(widget, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index) {
@@ -132,9 +135,14 @@ private:
 
     void setupGraphics();
 
+    void createConnections();
+
     void model2View();
 
     void view2Model();
+
+private slots:
+    void removeAllWidgets();
 
 };
 
