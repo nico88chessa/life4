@@ -1,72 +1,199 @@
-MainWindow #buttonFrame {
-    background-color: rgb(200, 0, 0);
-    min-width: 150px;
-    max-width: 150px;
-}
-
-MainWindow #buttonFrame[hidden="true"] {
-    min-width: 0px;
-    max-width: 0px;
-}
-
-MainWindow #hideMenuButton {
-    min-width: 20px;
-    max-width: 20px;
-    background-color: rgb(0, 200, 0);
-}
-
-MainWindow #stackedPages {
-    background-color: rgb(200, 200, 0);
-}
-
-/*QMainWindow {
-    background-color: rgb(239, 239, 239);
-}
-
-QFrame {
-    background-color: rgb(239, 245, 255);
-    border: 2px;
-}
-
-QLineEdit {
-    border: 10px;
-/*    padding: 10px;*/
-/*}
-
-QPushButton {
-    border: 0px;
-/*    padding: 10px;*/
-/*}
-*/
-IntLineEdit[valid="false"] {
-    color: rgb(255, 0 ,0);
-}
 /*
-DoubleLineEdit[valid="false"] {
-    color: rgb(255, 0 ,0);
+ * Roboto Font Weigh:
+ * Thin: 100
+ * Light: 200
+ * Regular: 400
+ * Medium: 500
+ * Bold: 600
+ * Black: 900
+ */
+
+QLabel {
+    padding: 8 0 4 0;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 10px;
 }
 
-SettingsPage QLabel {
-    min-width: 200px;
-    max-width: 200px;
-    min-height: 20px;
-    max-height: 20px;
-}
+/******************* QLineEdit *******************/
 
-SettingsPage #scrollAreaWidgetContents {
+QLineEdit:enabled {
+    border-style: solid;
+    border-width: 0 0 1 0;
+    border-color: rgba(0, 0, 0, 42%);
     background-color: transparent;
-}
-*/
-
-
-DigitalIOPage #IOList {
-    min-width: 300px;
-    max-width: 300px;
+    color: rgba(0, 0, 0, 54%);
+    padding: 8 0 4 0;
+    font-family: Roboto;
+    font-size: 16px;
 }
 
+QLineEdit:disabled {
+    border-style: dotted;
+    border-width: 0 0 1 0;
+    border-color: rgba(0, 0, 0, 42%);
+    background-color: transparent;
+    color: rgba(0, 0, 0, 38%);
+    padding: 8 0 4 0;
+}
 
-DigitalIOPage #IODetails QLabel {
-    min-height: 30px;
-    min-width: 200px;
-    max-width: 200px;
+QLineEdit:hover:!focus {
+    border-style: solid;
+    border-width: 0 0 2 0;
+    border-color: rgba(0, 0, 0, 87%);
+    background-color: transparent;
+    color: rgba(0, 0, 0, 54%);
+    padding: 8 0 4 0;
+}
+
+QLineEdit:focus {
+    border-style: solid;
+    border-width: 0 0 2 0;
+    border-color: rgba(0, 0, 0, 100%);
+    background-color: transparent;
+    color: rgba(0, 0, 0, 87%);
+    padding: 8 0 4 0;
+    selection-background-color: rgba(0, 0, 0, 87%);
+}
+
+
+/******************* QComboBox *******************/
+
+
+/* pulsante qcombobox */
+/* ho rimosso gli 8px di padding top e bottom
+   e li ho aggiunti come margin*/
+QComboBox {
+    /*padding: 8px 0px 8px 12px;
+    margin: 0px 8px 0px 0px;*/
+    padding-left: 12px;
+    margin: 8px 8px 8px 0px;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 16px;
+    border: none;
+/*    background-color: rgba(0, 0, 0, 0%);*/
+    /*background-color: qradialgradient(cx:0, cy:0.2, radius: 10,
+                    fx:0.5, fy:0.1, stop:0 white, stop:0.5 green);*/
+    background-clip: margin;
+}
+
+/* vista del menu a discesa */
+QComboBox QAbstractItemView {
+    padding: 8px 0px 8px 0px;
+    border-style: solid;
+    border-color: #E0E0E0;
+    /*border-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 red,
+        stop: 0.4 yellow,
+        stop: 0.5 green,
+        stop: 1.0 blue);*/
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+/*    background-color: blue;*/
+    background-clip: margin;
+}
+
+/* item del menu a discesa */
+QComboBox::item {
+    border: none;
+    padding: 0px 0px 0px 12px;
+    min-height: 32px;
+    max-height: 32px;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+QComboBox::item:selected {
+    background-color: rgba(0, 0, 0, 87%);
+    color: white;
+}
+
+QComboBox:indicator {
+    image: none;
+}
+
+QComboBox::drop-down {
+    border: none;
+    margin: 0px 16px 0px 0px;
+}
+
+QComboBox::down-arrow {
+    image: url(":/icons/dropdown");
+    width: 24px;
+    height: 24px;
+}
+
+/******************* QSpinBox *******************/
+
+QSpinBox:enabled {
+    border-style: solid;
+    border-width: 0 0 1 0;
+    border-color: rgba(0, 0, 0, 42%);
+    background-color: transparent;
+    color: rgba(0, 0, 0, 54%);
+    padding: 8 0 4 0;
+    font-family: Roboto;
+    font-size: 16px;
+}
+
+QSpinBox:disabled {
+    border-style: dotted;
+    border-width: 0 0 1 0;
+    border-color: rgba(0, 0, 0, 42%);
+    background-color: transparent;
+    color: rgba(0, 0, 0, 38%);
+    padding: 8 0 4 0;
+}
+
+QSpinBox:hover:!focus {
+    border-style: solid;
+    border-width: 0 0 2 0;
+    border-color: rgba(0, 0, 0, 87%);
+    background-color: transparent;
+    color: rgba(0, 0, 0, 54%);
+    padding: 8 0 4 0;
+}
+
+QSpinBox:focus {
+    border-style: solid;
+    border-width: 0 0 2 0;
+    border-color: rgba(0, 0, 0, 100%);
+    background-color: transparent;
+    color: rgba(0, 0, 0, 87%);
+    padding: 8 0 4 0;
+    selection-background-color: rgba(0, 0, 0, 87%);
+}
+
+QSpinBox::up-button {
+    width: 0px;
+}
+
+QSpinBox::down-button {
+    width: 0px;
+}
+
+
+/******************* QCheckBox *******************/
+
+QCheckBox::indicator:unchecked {
+    image: url(:/icons/checkboxOutline);
+    width: 24px;
+    height: 24px;
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/icons/checkbox);
+    width: 24px;
+    height: 24px;
+}
+
+
+
+
+#scrollAreaWidgetContents {
+    background-color: white;
 }

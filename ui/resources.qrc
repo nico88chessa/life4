@@ -3,6 +3,30 @@
         <file>styles/test2.qss</file>
         <file>lang/LIFE_EN.qm</file>
         <file>lang/LIFE_IT.qm</file>
-        <file>styles/style1.qss</file>
+    </qresource>
+    <qresource prefix="/font">
+        <file alias="RobotoBlack">font/robotottf/Roboto-Black.ttf</file>
+        <file alias="RobotoBlackItalic">font/robotottf/Roboto-BlackItalic.ttf</file>
+        <file alias="RobotoBold">font/robotottf/Roboto-Bold.ttf</file>
+        <file alias="RobotoBoldItalic">font/robotottf/Roboto-BoldItalic.ttf</file>
+        <file alias="RobotoItalic">font/robotottf/Roboto-Italic.ttf</file>
+        <file alias="RobotoLight">font/robotottf/Roboto-Light.ttf</file>
+        <file alias="RobotoLightItalic">font/robotottf/Roboto-LightItalic.ttf</file>
+        <file alias="RobotoMedium">font/robotottf/Roboto-Medium.ttf</file>
+        <file alias="RobotoMediumItalic">font/robotottf/Roboto-MediumItalic.ttf</file>
+        <file alias="RobotoRegular">font/robotottf/Roboto-Regular.ttf</file>
+        <file alias="RobotoThin">font/robotottf/Roboto-Thin.ttf</file>
+        <file alias="RobotoThinItalic">font/robotottf/Roboto-ThinItalic.ttf</file>
+        <file alias="RobotoCondensedBold">font/robotottf/RobotoCondensed-Bold.ttf</file>
+        <file alias="RobotoCondensedBoldItalic">font/robotottf/RobotoCondensed-BoldItalic.ttf</file>
+        <file alias="RobotoCondensedItalic">font/robotottf/RobotoCondensed-Italic.ttf</file>
+        <file alias="RobotoCondensedLight">font/robotottf/RobotoCondensed-Light.ttf</file>
+        <file alias="RobotoCondensedLightItalic">font/robotottf/RobotoCondensed-LightItalic.ttf</file>
+        <file alias="RobotoCondensedRegular">font/robotottf/RobotoCondensed-Regular.ttf</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file alias="dropdown">icons/arrow_drop_down_black_24dp.png</file>
+        <file alias="checkbox">icons/ic_check_box_black_24dp.png</file>
+        <file alias="checkboxOutline">icons/ic_check_box_outline_blank_black_24dp.png</file>
     </qresource>
 </RCC>
