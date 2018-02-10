@@ -51,7 +51,6 @@ void SettingsPage::removeAllWidgets() {
 }
 
 void SettingsPage::setupGraphics() {
-
     ui->verticalLayout->addLayout(widgetFactory(life::machineparameters::MACHINE_ETH_INTERFACE_LAN));
     ui->verticalLayout->addLayout(widgetFactory(life::machineparameters::MACHINE_ETH_INTERFACE_DEVICES));
     ui->verticalLayout->addLayout(widgetFactory(life::machineparameters::GUI_LANGUAGE));
@@ -120,7 +119,7 @@ void SettingsPage::model2View() {
         } else if (auto checkBox = qobject_cast<QCheckBox*>(widget)) {
             checkBox->setChecked(value.toBool());
 
-        } else if (auto spinBox = qobject_cast<QSpinBox*>(widget)) {
+        } else if (auto spinBox = qobject_cast<life::SpinboxNoButtons*>(widget)) {
             spinBox->setValue(value.toInt());
 
         } else if (auto comboBox = qobject_cast<QComboBox*>(widget)) {

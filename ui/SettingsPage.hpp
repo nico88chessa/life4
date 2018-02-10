@@ -15,8 +15,7 @@
 #include <QObject>
 #include <widgets/DoubleLineEdit.hpp>
 #include <widgets/IntLineEdit.hpp>
-#include <QSpinBox>
-#include <QDoubleSpinBox>
+#include <widgets/SpinboxNoButtons.hpp>
 #include <memory>
 
 namespace Ui {
@@ -79,10 +78,11 @@ private:
             hLayout->addWidget(widget);
 
         } else if (std::is_integral<type>::value) {
-            auto widget = new QSpinBox();
+            auto widget = new life::SpinboxNoButtons();
             widget->setObjectName(mp.key);
             widget->setSuffix(" "+mp.unitMeasure);
             widget->setRange(0, std::numeric_limits<int>::max());
+            widget->setButtonSymbols(QSpinBox::NoButtons);
             connect(widget, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](int value) {
                 parameters[mp.key] = value;
             });

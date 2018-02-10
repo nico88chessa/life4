@@ -40,7 +40,13 @@ struct SimpleIO {
     DirectionType direction;
     bool isAlarm;
     QString alarmText;
+
+    friend inline bool operator==(const SimpleIO& a, const SimpleIO& b);
 };
+
+bool operator==(const SimpleIO& a, const SimpleIO& b) {
+    return a.name.compare(b.name)==0;
+}
 
 template <typename T>
 struct isSimpleIO {
