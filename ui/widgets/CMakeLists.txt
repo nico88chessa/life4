@@ -3,6 +3,8 @@ SET(ITEMS
     "DoubleLineEdit"
     "UnmovableDialog"
     "UnmovableMainWindow"
+    "SpinboxNoButtons"
+    "LComboBox"
     )
 
 FOREACH(ITEM ${ITEMS})

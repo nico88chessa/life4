@@ -192,8 +192,26 @@ QCheckBox::indicator:checked {
 }
 
 
-
-
 #scrollAreaWidgetContents {
     background-color: white;
 }
+
+/*LComboBox QComboBox:focus,
+LComboBox QComboBox:hover {
+    background-color: rgba(0, 0, 0, 10%);
+    border-radius: 4px;
+}*/
+
+LComboBox QLabel {
+    padding: 8px 0px 0px 8px;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 10px;
+}
+/*
+LComboBox QComboBox {
+    border: 1px solid black;
+    padding: 0px;
+    margin: 0px;
+}
+*/
